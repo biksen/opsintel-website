@@ -498,22 +498,22 @@
           opacity: 0.3;
         }
       }
-      /* Inline Live/Offline status shown next to each Explore Fulcrum button. */
+      /* The small Live/Offline status shown under each Explore Fulcrum button. */
       .fx-status {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
         font-family: var(--font-mono);
-        font-size: 11px;
+        font-size: 9.5px;
         font-weight: 600;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--ok);
         white-space: nowrap;
       }
       .fx-status .led {
-        width: 7px;
-        height: 7px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: var(--ok);
         box-shadow: 0 0 9px var(--ok);
@@ -538,12 +538,12 @@
           display: none;
         }
       }
-      /* Button-over-status: the Live/Offline indicator sits under its button. */
+      /* Button-over-status: the Live/Offline indicator sits centered under it. */
       .explore-stack {
         display: inline-flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
+        gap: 7px;
       }
       .fulcrum-label {
         margin-top: 20px;
@@ -1055,7 +1055,7 @@
             </p>
 
             <div class="fulcrum-actions">
-              <div class="explore-stack" style="align-items: flex-start">
+              <div class="explore-stack">
                 <a class="btn btn-primary" href="https://fulcrum.opsintels.com" data-launch id="explore">
                   Explore Fulcrum
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
