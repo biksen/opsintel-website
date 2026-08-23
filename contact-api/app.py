@@ -23,7 +23,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 TO = os.environ.get("CONTACT_TO", "bikash.sen@opsintels.com")
-FROM = os.environ.get("CONTACT_FROM", "no-reply@opsintels.com")
+FROM = os.environ.get("CONTACT_FROM", "bikash.sen@opsintels.com")
 SMTP_HOST = os.environ.get("SMTP_HOST", "")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")

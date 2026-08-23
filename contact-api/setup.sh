@@ -21,7 +21,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # --- config (override any via env) ---
 CONTACT_TO="${CONTACT_TO:-bikash.sen@opsintels.com}"
-CONTACT_FROM="${CONTACT_FROM:-no-reply@opsintels.com}"
+CONTACT_FROM="${CONTACT_FROM:-bikash.sen@opsintels.com}"
 SMTP_HOST="${SMTP_HOST:-smtp-relay.brevo.com}"
 SMTP_PORT="${SMTP_PORT:-587}"
 SMTP_STARTTLS="${SMTP_STARTTLS:-true}"
