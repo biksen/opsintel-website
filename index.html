@@ -497,6 +497,46 @@
           opacity: 0.3;
         }
       }
+      /* Inline Live/Offline status shown next to each Explore Fulcrum button. */
+      .fx-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ok);
+        white-space: nowrap;
+      }
+      .fx-status .led {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ok);
+        box-shadow: 0 0 9px var(--ok);
+      }
+      .fx-status[data-state="offline"] {
+        color: var(--down);
+      }
+      .fx-status[data-state="offline"] .led {
+        background: var(--down);
+        box-shadow: 0 0 9px var(--down);
+      }
+      .fx-status[data-state="checking"] {
+        color: var(--ink-faint);
+      }
+      .fx-status[data-state="checking"] .led {
+        background: var(--ink-faint);
+        box-shadow: none;
+        animation: blink 1s ease-in-out infinite;
+      }
+      @media (max-width: 780px) {
+        .nav-fx {
+          display: none;
+        }
+      }
       .fulcrum-label {
         margin-top: 20px;
         font-family: var(--font-mono);
@@ -627,6 +667,75 @@
       }
       .cta .btn {
         margin-top: 34px;
+      }
+
+      /* ---------- contact ---------- */
+      .contact-form {
+        margin-top: 34px;
+        max-width: 640px;
+        display: grid;
+        gap: 16px;
+        background: var(--surface);
+        border: 1px solid var(--edge);
+        border-radius: var(--radius);
+        padding: clamp(24px, 3.5vw, 36px);
+      }
+      .cf-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      @media (max-width: 560px) {
+        .cf-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .field label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink-muted);
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        background: var(--navy-2);
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        color: var(--ink);
+        font-family: var(--font-body);
+        font-size: 15px;
+        padding: 12px 14px;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(77, 139, 255, 0.18);
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 112px;
+      }
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 4px;
+      }
+      .form-note {
+        min-height: 1.2em;
+        margin: 0;
+        font-size: 13.5px;
+      }
+      .form-note.ok {
+        color: var(--ok);
+      }
+      .form-note.err {
+        color: var(--down);
       }
 
       /* ---------- footer ---------- */
@@ -782,8 +891,12 @@
           <a href="#top">Home</a>
           <a href="#products">Products</a>
           <a href="#about">About</a>
+          <a href="#contact">Contact</a>
         </nav>
         <div class="nav-right">
+          <span class="fx-status nav-fx" data-fx-status data-state="checking">
+            <span class="led"></span><span class="fx-text">Checking…</span>
+          </span>
           <a class="btn btn-primary btn-sm" href="https://fulcrum.opsintels.com" data-launch>
             <span class="btn-explore-label">Explore&nbsp;</span>Fulcrum
           </a>
@@ -810,6 +923,9 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
             </a>
             <a class="btn btn-ghost" href="#vision">Learn More</a>
+            <span class="fx-status" data-fx-status data-state="checking" style="margin-left: 4px">
+              <span class="led"></span><span class="fx-text">Checking…</span>
+            </span>
           </div>
         </div>
 
@@ -913,8 +1029,8 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 17l7-5 4 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="19.5" r="1.5" fill="currentColor" /></svg>
               </span>
               <span class="fulcrum-name">Fulcrum</span>
-              <span class="badge" id="badge" data-state="checking">
-                <span class="led"></span><span id="badge-text">Live Product</span>
+              <span class="badge" data-fx-status data-state="checking">
+                <span class="led"></span><span class="fx-text">Checking…</span>
               </span>
             </div>
 
@@ -1005,6 +1121,44 @@
       </section>
 
       <!-- 6. FINAL CTA -->
+      <!-- CONTACT -->
+      <section class="sec contact-sec wrap" id="contact">
+        <div class="head reveal" style="max-width: 60ch">
+          <span class="eyebrow">Contact</span>
+          <h2 style="font-weight:600;font-size:clamp(1.7rem,3.2vw,2.3rem);line-height:1.14;margin-top:14px;">
+            Get in touch
+          </h2>
+          <p style="margin-top:14px;color:var(--ink-muted);font-size:1.05rem;">
+            Questions, a Fulcrum demo, or early access — leave your details and we&apos;ll get back to you.
+          </p>
+        </div>
+        <form class="contact-form reveal" id="contact-form" novalidate>
+          <div class="cf-row">
+            <div class="field">
+              <label for="cf-name">Name</label>
+              <input id="cf-name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="cf-phone">Phone</label>
+            <input id="cf-phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" rows="4"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-ghost" id="cf-cancel">Cancel</button>
+          </div>
+          <p class="form-note" id="cf-note" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
       <section class="sec cta wrap">
         <div class="reveal">
           <h2>Explore Operations <span class="grad-text">Intelligence</span></h2>
@@ -1016,6 +1170,9 @@
             Explore Fulcrum
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
           </a>
+          <div class="fx-status" data-fx-status data-state="checking" style="justify-content: center; margin-top: 16px">
+            <span class="led"></span><span class="fx-text">Checking…</span>
+          </div>
         </div>
       </section>
     </main>
@@ -1031,6 +1188,7 @@
             <a href="#top">Home</a>
             <a href="#products">Products</a>
             <a href="#about">About</a>
+            <a href="#contact">Contact</a>
             <a href="https://fulcrum.opsintels.com" data-launch>Fulcrum</a>
           </nav>
         </div>
@@ -1053,7 +1211,6 @@
         </p>
         <div class="actions">
           <button class="btn btn-primary" id="retry" type="button">Check again</button>
-          <a class="btn btn-ghost" href="mailto:hello@opsintels.com?subject=Fulcrum%20access">Request access</a>
           <button class="btn btn-ghost" id="close" type="button">Back to OpsIntel</button>
         </div>
       </div>
@@ -1066,15 +1223,18 @@
         var TIMEOUT_MS = 5000;
         var lastState = "checking";
 
-        var badge = document.getElementById("badge");
-        var badgeText = document.getElementById("badge-text");
         var overlay = document.getElementById("overlay");
+        var statuses = document.querySelectorAll("[data-fx-status]");
 
+        // Drive every Live/Offline indicator (nav, hero, card, CTA) from one probe.
         function setState(state) {
           lastState = state;
-          badge.setAttribute("data-state", state);
-          badgeText.textContent =
-            state === "offline" ? "Offline" : state === "checking" ? "Checking…" : "Live Product";
+          var label = state === "offline" ? "Offline" : state === "checking" ? "Checking…" : "Live";
+          Array.prototype.forEach.call(statuses, function (el) {
+            el.setAttribute("data-state", state);
+            var t = el.querySelector(".fx-text");
+            if (t) t.textContent = label;
+          });
         }
 
         // no-cors probe: resolves opaquely when the server answers, rejects on a
@@ -1142,6 +1302,44 @@
           Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function (el) { io.observe(el); });
         } else {
           Array.prototype.forEach.call(document.querySelectorAll(".reveal"), function (el) { el.classList.add("in"); });
+        }
+
+        // Contact form: compose an email to the team. The recipient is assembled at
+        // click time and never placed in the DOM as a mailto/title, so no browser
+        // tooltip or status bar ever reveals the address.
+        var cform = document.getElementById("contact-form");
+        var cnote = document.getElementById("cf-note");
+        if (cform) {
+          cform.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var name = document.getElementById("cf-name").value.trim();
+            var email = document.getElementById("cf-email").value.trim();
+            var phone = document.getElementById("cf-phone").value.trim();
+            var message = document.getElementById("cf-message").value.trim();
+            if (!name || !email) {
+              cnote.textContent = "Please enter your name and email.";
+              cnote.className = "form-note err";
+              return;
+            }
+            var to = ["bikash.sen", "opsintels.com"].join("@");
+            var subject = "OpsIntel contact — " + name;
+            var body =
+              "Name: " + name +
+              "\nEmail: " + email +
+              "\nPhone: " + (phone || "—") +
+              "\n\n" + (message || "(no message)");
+            window.location.href =
+              "mailto:" + to +
+              "?subject=" + encodeURIComponent(subject) +
+              "&body=" + encodeURIComponent(body);
+            cnote.textContent = "Opening your email app to send…";
+            cnote.className = "form-note ok";
+          });
+          document.getElementById("cf-cancel").addEventListener("click", function () {
+            cform.reset();
+            cnote.textContent = "";
+            cnote.className = "form-note";
+          });
         }
 
         probe();
