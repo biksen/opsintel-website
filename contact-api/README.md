@@ -28,9 +28,10 @@ sudo nano .env          # set CONTACT_TO, SMTP_HOST, SMTP_USER, SMTP_PASSWORD…
 sudo chmod 600 .env
 ```
 
-On EC2, **Amazon SES SMTP** is the natural choice: verify the `opsintels.com`
-domain (and, while in the SES sandbox, the `CONTACT_TO` address), create SMTP
-credentials, and use `email-smtp.<region>.amazonaws.com`. Any SMTP provider works.
+**Brevo** (free tier) works well: `smtp-relay.brevo.com:587`, TLS, using your
+Brevo SMTP login + key. The `CONTACT_FROM` address must be a **verified sender**
+in Brevo (Senders & IP → add/verify the sender, or authenticate the `opsintels.com`
+domain for best deliverability). Amazon SES or any other SMTP provider works too.
 
 **3. Run it as a service:**
 
