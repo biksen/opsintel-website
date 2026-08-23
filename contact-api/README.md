@@ -8,7 +8,21 @@ in the browser. Flask + SMTP, run behind nginx on `127.0.0.1:8100`.
 POST /api/contact   {name, email, phone, message}   ->   {"ok": true}
 ```
 
-## Setup on the always-on EC2
+## Quick setup (one script)
+
+From the repo on the EC2, after `deploy/setup.sh` has installed nginx:
+
+```bash
+sudo ./contact-api/setup.sh
+```
+
+It prompts for your Brevo SMTP login + key (or pass them as `SMTP_USER` /
+`SMTP_PASSWORD` env vars), then installs to `/opt/opsintel-contact`, creates the
+virtualenv, writes `.env` (chmod 600), starts the systemd service, health-checks
+it, and reloads nginx. Credentials are never written to the repo. Re-run it any
+time to update. The manual steps below are the same thing, spelled out.
+
+## Manual setup
 
 **1. Install it** (paths here match the systemd unit; adjust if you differ):
 
