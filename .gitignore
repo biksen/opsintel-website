@@ -4,3 +4,10 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+
+# Secrets & local envs (contact-api)
+.env
+**/.env
+.venv/
+**/.venv/
+__pycache__/

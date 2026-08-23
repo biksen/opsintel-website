@@ -1,0 +1,24 @@
+# systemd unit for the OpsIntel contact handler.
+# Install to /etc/systemd/system/opsintel-contact.service, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now opsintel-contact
+#
+# Adjust WorkingDirectory / ExecStart paths and User to match where you cloned
+# the repo and created the virtualenv (see contact-api/README.md).
+[Unit]
+Description=OpsIntel contact form handler
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/opsintel-contact
+EnvironmentFile=/opt/opsintel-contact/.env
+ExecStart=/opt/opsintel-contact/.venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8100 app:app
+Restart=always
+RestartSec=3
+# Use a non-root service account that exists on your distro (nginx on Amazon
+# Linux, www-data on Ubuntu/Debian).
+User=nginx
+Group=nginx
+
+[Install]
+WantedBy=multi-user.target

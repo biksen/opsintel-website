@@ -1,35 +1,44 @@
 # opsintel-website
 
-The public one-page site for **opsintels.com** — an OpsIntels landing page with a
-section for the flagship product, **Fulcrum**, and a link to the live app at
-`https://fulcrum.opsintels.com`.
+The public one-page site for **opsintels.com** — an OpsIntel landing page with a
+section for the flagship product, **Fulcrum**, a live Fulcrum status indicator, and
+a server-side contact form.
 
-It is a single self-contained `index.html` (no build step): fonts come from Google
-Fonts, everything else is inline. Meant to run on a small, **always-on** host so the
-front door stays up even when the Fulcrum EC2 instance is stopped to save costs.
+The site itself is a single self-contained `index.html` (no build step): fonts come
+from Google Fonts, everything else is inline. Meant to run on a small, **always-on**
+host so the front door stays up even when the Fulcrum EC2 instance is stopped to save
+costs. The contact form is handled by a tiny Flask service (see `contact-api/`).
 
 ## The Fulcrum "is it up?" behaviour
 
 The Fulcrum launch buttons don't link blindly. On load — and again on click — the
-page probes `https://fulcrum.opsintels.com/healthz` with a short-timeout `no-cors`
-`fetch`:
+page probes `https://fulcrum.opsintels.com/` with a short-timeout `no-cors` `fetch`,
+and a **Live / Offline** indicator sits under every "Explore Fulcrum" button:
 
-- **Reachable** → the status pill shows `online` and the button opens the app.
-- **Unreachable** (instance stopped) → a status panel appears:
-  _"The Fulcrum application is down right now"_, with **Check again** and a contact
-  link — never a dead browser error.
+- **Reachable** → the indicator shows `Live` and the button opens the app.
+- **Unreachable** (instance stopped) → the indicator shows `Offline`, and clicking
+  opens a status panel — _"The Fulcrum application is down right now"_ with
+  **Check again** — never a dead browser error.
 
 > Note: the probe distinguishes "instance up" from "instance stopped". If the
 > instance is running but the app itself is failing (e.g. nginx returns 5xx), the
 > probe still reads `online` and the user lands on Fulcrum's own error page.
 
+## Contact form (server-side)
+
+The form POSTs to `/api/contact`, which nginx proxies to a small Flask handler
+that emails the submission — no mail-app popup, and the recipient address is only
+on the server (never in the page, so no browser tooltip reveals it). Setup lives in
+[`contact-api/`](contact-api/README.md).
+
 ## Files
 
 | File | What it is |
 |------|------------|
-| `index.html` | The entire site (markup + styles + probe script) |
+| `index.html` | The entire site (markup + styles + status/contact scripts) |
 | `favicon.svg` | Brand mark |
-| `deploy/nginx-opsintels.conf` | Sample nginx server block |
+| `contact-api/` | Flask contact-form handler + systemd unit + setup |
+| `deploy/nginx-opsintels.conf` | nginx server block (static site + `/api/` proxy) |
 | `deploy/setup.sh` | One-shot: install nginx, publish the site, get HTTPS |
 
 ## Deploy on the always-on (free-tier) EC2
