@@ -8,14 +8,14 @@
 #   2. Security group inbound: TCP 80 and 443 open to 0.0.0.0/0.
 #
 # Usage:
-#   sudo FULCRUM_LE_EMAIL=you@example.com ./deploy/setup.sh
-#   (FULCRUM_LE_EMAIL is optional but recommended — it gets expiry warnings.)
+#   sudo LE_EMAIL=you@example.com ./deploy/setup.sh
+#   (LE_EMAIL is optional but recommended — it gets expiry warnings.)
 set -euo pipefail
 
 DOMAIN="opsintels.com"
 WWW="www.opsintels.com"
 WEBROOT="/var/www/opsintels"
-LE_EMAIL="${FULCRUM_LE_EMAIL:-}"
+LE_EMAIL="${LE_EMAIL:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SITE_DIR="$(dirname "$SCRIPT_DIR")"
 

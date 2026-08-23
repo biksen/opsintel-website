@@ -54,7 +54,7 @@ on the server (never in the page, so no browser tooltip reveals it). Setup lives
 ```bash
 git clone https://github.com/biksen/opsintel-website.git
 cd opsintel-website
-sudo FULCRUM_LE_EMAIL=you@example.com ./deploy/setup.sh
+sudo LE_EMAIL=you@example.com ./deploy/setup.sh
 ```
 
 That installs nginx, copies the site to `/var/www/opsintels`, writes the server
