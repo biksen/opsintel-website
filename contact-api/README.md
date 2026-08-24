@@ -42,10 +42,11 @@ sudo nano .env          # set CONTACT_TO, SMTP_HOST, SMTP_USER, SMTP_PASSWORD…
 sudo chmod 600 .env
 ```
 
-**Brevo** (free tier) works well: `smtp-relay.brevo.com:587`, TLS, using your
-Brevo SMTP login + key. The `CONTACT_FROM` address must be a **verified sender**
-in Brevo (Senders & IP → add/verify the sender, or authenticate the `opsintels.com`
-domain for best deliverability). Amazon SES or any other SMTP provider works too.
+**GoDaddy email** works well: `smtpout.secureserver.net`, port **465 (SSL)** or
+`587` (STARTTLS), authenticating with the full mailbox address as the username and
+its password. With GoDaddy, `CONTACT_FROM` should be that same mailbox address
+(sending as an address you don't own the mailbox for will be rejected). Amazon SES,
+Brevo, or any other SMTP provider works too.
 
 **3. Run it as a service:**
 

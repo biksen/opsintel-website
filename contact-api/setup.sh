@@ -22,8 +22,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # --- config (override any via env) ---
 CONTACT_TO="${CONTACT_TO:-bikash.sen@opsintels.com}"
 CONTACT_FROM="${CONTACT_FROM:-bikash.sen@opsintels.com}"
-SMTP_HOST="${SMTP_HOST:-smtp-relay.brevo.com}"
-SMTP_PORT="${SMTP_PORT:-587}"
+SMTP_HOST="${SMTP_HOST:-smtpout.secureserver.net}"
+SMTP_PORT="${SMTP_PORT:-465}"
 SMTP_STARTTLS="${SMTP_STARTTLS:-true}"
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -33,10 +33,10 @@ fi
 
 # --- credentials: from env, else prompt (kept out of the repo either way) ---
 if [ -z "${SMTP_USER:-}" ]; then
-  read -rp "Brevo SMTP login (e.g. xxxx@smtp-brevo.com): " SMTP_USER
+  read -rp "SMTP username (your mailbox email, e.g. you@opsintels.com): " SMTP_USER
 fi
 if [ -z "${SMTP_PASSWORD:-}" ]; then
-  read -rsp "Brevo SMTP key: " SMTP_PASSWORD
+  read -rsp "SMTP password: " SMTP_PASSWORD
   echo
 fi
 if [ -z "$SMTP_USER" ] || [ -z "$SMTP_PASSWORD" ]; then
@@ -135,5 +135,5 @@ echo "     curl -s -X POST https://opsintels.com/api/contact \\"
 echo "          -H 'Content-Type: application/json' \\"
 echo "          -d '{\"name\":\"Test\",\"email\":\"you@example.com\",\"message\":\"hi\"}'"
 echo ""
-echo "   IMPORTANT: CONTACT_FROM ($CONTACT_FROM) must be a VERIFIED sender in Brevo"
-echo "   (Brevo -> Senders, Domains & Dedicated IPs), or sends will be rejected."
+echo "   NOTE: with GoDaddy SMTP, CONTACT_FROM ($CONTACT_FROM) should match the"
+echo "   mailbox you authenticate with (SMTP_USER), or the send may be rejected."
