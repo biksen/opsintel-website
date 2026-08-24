@@ -17,6 +17,7 @@ import os
 import smtplib
 import ssl
 from email.message import EmailMessage
+from email.utils import formataddr
 
 from flask import Flask, jsonify, request
 
@@ -45,9 +46,11 @@ def _send(name: str, email: str, phone: str, message: str) -> None:
     )
     msg = EmailMessage()
     msg["Subject"] = f"OpsIntel contact — {name}"
-    msg["From"] = FROM
+    # Address stays the authenticated mailbox (SMTP requires it), but the display
+    # name is the submitter, so the inbox shows who wrote in — not "me".
+    msg["From"] = formataddr((f"{name} (via OpsIntel)", FROM))
     msg["To"] = TO
-    msg["Reply-To"] = email  # so a reply goes straight to the sender
+    msg["Reply-To"] = formataddr((name, email))  # reply goes straight to the sender
     msg.set_content(body)
 
     context = ssl.create_default_context()
