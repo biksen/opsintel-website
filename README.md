@@ -49,16 +49,22 @@ on the server (never in the page, so no browser tooltip reveals it). Setup lives
    IP / Elastic IP.
 2. Security group inbound: **TCP 80 and 443** open to `0.0.0.0/0`.
 
-**One-shot**
+**One command — everything (site + HTTPS + contact handler):**
 
 ```bash
-git clone https://github.com/biksen/opsintel-website.git
+git clone https://github.com/biksen/opsintel-website.git   # or: git pull
 cd opsintel-website
-sudo LE_EMAIL=you@example.com ./deploy/setup.sh
+sudo ./deploy.sh
 ```
 
-That installs nginx, copies the site to `/var/www/opsintels`, writes the server
-block, and obtains a Let's Encrypt certificate for `opsintels.com` + `www`.
+`deploy.sh` publishes the site, sets up nginx + a Let's Encrypt certificate on the
+first run, and installs/refreshes the contact handler (prompting for the SMTP
+login + password). It's **idempotent** — re-run it after every `git pull`. Pass
+`LE_EMAIL=…` (cert-expiry notices) and `SMTP_USER=… SMTP_PASSWORD=…` as env vars
+to skip the prompts.
+
+The individual `deploy/setup.sh` (site only) and `contact-api/setup.sh` (handler
+only) are still available if you want to run a single part.
 
 **Updating the site later**
 
