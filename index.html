@@ -621,17 +621,76 @@
         height: 20px;
       }
       .cap b {
+        position: relative;
         font-family: var(--font-display);
         font-weight: 600;
         font-size: 1.06rem;
         line-height: 1.28;
         letter-spacing: -0.005em;
         color: var(--ink);
+        padding-bottom: 9px;
+      }
+      /* A short gradient underline under each card title — a small mark of polish. */
+      .cap b::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 26px;
+        height: 2px;
+        border-radius: 2px;
+        background: var(--grad);
       }
       .cap .d {
         color: var(--ink-muted);
         font-size: 14.5px;
         line-height: 1.62;
+      }
+      /* The accented tail of the Fulcrum headline. */
+      .fulcrum-main h2 .hl {
+        color: var(--purple);
+      }
+      /* Full-width CTA band across the bottom of the Fulcrum card. */
+      .fulcrum-cta {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--edge);
+        padding: clamp(18px, 2.4vw, 26px) clamp(24px, 3vw, 40px);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px 22px;
+        background: linear-gradient(90deg, rgba(168, 121, 244, 0.06), transparent 62%);
+      }
+      .fulcrum-cta p {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 10px;
+      }
+      .fulcrum-cta b {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.02rem;
+        color: var(--ink);
+      }
+      .fulcrum-cta span {
+        color: var(--ink-muted);
+        font-size: 14.5px;
+      }
+      .fulcrum-cta-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--purple);
+        font-weight: 600;
+        font-size: 14.5px;
+        white-space: nowrap;
+        transition: gap 0.18s ease;
+      }
+      .fulcrum-cta-link:hover {
+        gap: 11px;
       }
 
       /* ---------- next + about + cta ---------- */
@@ -1065,7 +1124,7 @@
             </div>
 
             <div class="fulcrum-label">Governed AI for software delivery</div>
-            <h2>From a red pipeline to a fix your team can trust.</h2>
+            <h2>From a red pipeline to a fix your team <span class="hl">can trust.</span></h2>
             <p class="fulcrum-desc">
               Fulcrum is an agentic teammate for the delivery pipeline. When a build
               fails or a deploy breaks, it reads the logs, pinpoints the root cause,
@@ -1119,6 +1178,17 @@
               <b>Plug-and-play, vendor-neutral</b>
               <span class="d">Value in weeks, not a re-platforming. Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Azure, Jenkins, AWS. No rip-and-replace, no lock-in.</span>
             </div>
+          </div>
+
+          <div class="fulcrum-cta">
+            <p>
+              <b>Built for velocity. Designed for control.</b>
+              <span>Ship faster with AI that follows your rules.</span>
+            </p>
+            <a class="fulcrum-cta-link" href="https://fulcrum.opsintels.com" data-launch>
+              See how it works
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
           </div>
         </div>
       </section>
