@@ -585,7 +585,7 @@
         border-top: 1px solid var(--edge);
         display: grid;
         grid-template-columns: 1fr auto 1.2fr auto 1fr;
-        align-items: center;
+        align-items: stretch;
         gap: 3px;
       }
       @media (max-width: 540px) {
@@ -619,42 +619,60 @@
         text-align: center;
         line-height: 1.15;
       }
+      /* Connectors: curved wires converging from the inputs to a node by the gateway,
+         and diverging from the gateway out to each output — each end capped with a
+         circle. The wires are dashed and march toward the flow direction. */
       .hub-conn {
         position: relative;
-        align-self: center;
-        min-width: 22px;
-        height: 2px;
+        align-self: stretch;
+        min-width: 42px;
       }
-      .hub-conn::before {
-        content: "";
+      .hub-wire {
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          90deg,
-          color-mix(in srgb, var(--purple) 38%, var(--edge)),
-          color-mix(in srgb, var(--purple) 55%, var(--edge))
-        );
+        width: 100%;
+        height: 100%;
       }
-      .hub-node {
+      .hub-wire path {
+        fill: none;
+        stroke: color-mix(in srgb, var(--purple) 55%, var(--edge));
+        stroke-width: 1.5;
+        vector-effect: non-scaling-stroke;
+        stroke-dasharray: 3 5;
+        animation: wireFlow 0.9s linear infinite;
+      }
+      @keyframes wireFlow {
+        to { stroke-dashoffset: -8; }
+      }
+      .hub-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        margin-top: -4px;
+        border-radius: 50%;
+        background: var(--surface);
+        border: 1.5px solid color-mix(in srgb, var(--purple) 65%, var(--edge));
+        z-index: 2;
+      }
+      .hub-conn-l .hub-dot { left: -4px; }
+      .hub-conn-r .hub-dot { right: -4px; }
+      .hub-dot.d1 { top: 18%; }
+      .hub-dot.d2 { top: 42%; }
+      .hub-dot.d3 { top: 66%; }
+      .hub-dot.d4 { top: 90%; }
+      .hub-junction {
         position: absolute;
         top: 50%;
-        margin-top: -3.5px;
-        width: 7px;
-        height: 7px;
+        margin-top: -4.5px;
+        width: 9px;
+        height: 9px;
         border-radius: 50%;
         background: var(--purple);
-        box-shadow: 0 0 8px 1px rgba(168, 121, 244, 0.8);
-        animation: hubFlow 1.9s linear infinite;
+        box-shadow: 0 0 8px 1px rgba(168, 121, 244, 0.75);
+        z-index: 2;
       }
-      .hub-conn:last-of-type .hub-node {
-        animation-delay: 0.95s;
-      }
-      @keyframes hubFlow {
-        0% { left: 1px; opacity: 0; }
-        15% { opacity: 1; }
-        85% { opacity: 1; }
-        100% { left: calc(100% - 8px); opacity: 0; }
-      }
+      .hub-conn-l .hub-junction { right: -4.5px; }
+      .hub-conn-r .hub-junction { left: -4.5px; }
       .hub-core {
         border: 1px solid color-mix(in srgb, var(--purple) 48%, var(--edge));
         border-radius: 14px;
@@ -664,6 +682,9 @@
           var(--surface);
         box-shadow: 0 12px 32px -18px rgba(88, 60, 160, 0.6);
         animation: hubPulse 3.4s ease-in-out infinite;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       .hub-core-top {
         display: flex;
@@ -763,29 +784,33 @@
       @media (max-width: 540px) {
         .hub-conn {
           justify-self: center;
-          width: 2px;
-          height: 22px;
           min-width: 0;
+          width: 100%;
+          height: 24px;
+        }
+        .hub-wire,
+        .hub-dot {
+          display: none;
         }
         .hub-conn::before {
-          inset: auto;
+          content: "";
+          position: absolute;
           top: 0;
           bottom: 0;
           left: 50%;
           margin-left: -1px;
           width: 2px;
-          height: auto;
+          background: color-mix(in srgb, var(--purple) 45%, var(--edge));
         }
-        .hub-node {
+        .hub-junction {
           left: 50%;
-          margin-left: -3.5px;
-          top: calc(50% - 3.5px);
-          margin-top: 0;
-          animation: none;
+          right: auto;
+          margin-left: -4.5px;
+          top: calc(50% - 4.5px);
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .hub-node,
+        .hub-wire path,
         .hub-core,
         .hub-txt,
         .hub-pill {
@@ -1328,14 +1353,18 @@
                 <span class="hub-txt">Tickets</span>
               </div>
 
-              <div class="hub-conn"><span class="hub-node"></span></div>
+              <div class="hub-conn hub-conn-l" aria-hidden="true">
+                <svg class="hub-wire" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M3 18C20 18 20 50 37 50" /><path d="M3 42C20 42 22 50 37 50" /><path d="M3 66C20 66 22 50 37 50" /><path d="M3 90C20 90 20 50 37 50" /></svg>
+                <span class="hub-dot d1"></span><span class="hub-dot d2"></span><span class="hub-dot d3"></span><span class="hub-dot d4"></span>
+                <span class="hub-junction"></span>
+              </div>
 
               <div class="hub-core">
                 <div class="hub-core-top">
                   <span class="hub-core-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l7-5 4 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="19.5" r="1.5" fill="currentColor" /></svg></span>
                   <div>
                     <b>Fulcrum</b>
-                    <span>Governed AI Powered Pipeline Gateway</span>
+                    <span>Governed AI Powered</span>
                   </div>
                 </div>
                 <div class="hub-pills">
@@ -1346,7 +1375,11 @@
                 </div>
               </div>
 
-              <div class="hub-conn"><span class="hub-node"></span></div>
+              <div class="hub-conn hub-conn-r" aria-hidden="true">
+                <svg class="hub-wire" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M3 50C18 50 20 18 37 18" /><path d="M3 50C18 50 18 42 37 42" /><path d="M3 50C18 50 18 66 37 66" /><path d="M3 50C18 50 20 90 37 90" /></svg>
+                <span class="hub-junction"></span>
+                <span class="hub-dot d1"></span><span class="hub-dot d2"></span><span class="hub-dot d3"></span><span class="hub-dot d4"></span>
+              </div>
 
               <div class="hub-col">
                 <span class="hub-clabel">What you get</span>
