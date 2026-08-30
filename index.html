@@ -574,253 +574,208 @@
         gap: 12px;
         align-items: center;
       }
-      /* The governed-flow hub — a compact HORIZONTAL diagram under the CTA in the left
-         panel, beside the feature cards: text "signals in" feed the Fulcrum gateway
-         (its functions), which fans out to a text "what you get". Connector nodes flow
-         across; the gateway breathes. Stacks on very narrow screens; motion off under
-         prefers-reduced-motion. */
-      .fulcrum-hub {
-        margin-top: 28px;
-        padding-top: 24px;
+      /* End-to-end workflow — the section's centrepiece. A vertical flow
+         (inputs → Fulcrum → reasoning → delivery) with a particle stream dropping
+         through each link and a purple glow that highlights the active stage on a 6s
+         loop. All motion is disabled under prefers-reduced-motion. */
+      .fx-flow {
+        margin-top: 30px;
+        padding-top: 26px;
         border-top: 1px solid var(--edge);
-        display: grid;
-        grid-template-columns: 1fr auto 1.2fr auto 1fr;
-        align-items: stretch;
-        gap: 3px;
+        display: flex;
+        flex-direction: column;
       }
-      @media (max-width: 540px) {
-        .fulcrum-hub {
-          grid-template-columns: 1fr;
-          gap: 0;
+      .fx-stage {
+        border: 1px solid var(--edge);
+        border-radius: 14px;
+        padding: 13px 15px;
+        background: rgba(255, 255, 255, 0.02);
+        animation: fxStage 6s ease-in-out infinite;
+      }
+      .fx-flow > .fx-stage:nth-child(1) { animation-delay: 0s; }
+      .fx-flow > .fx-stage:nth-child(5) { animation-delay: 3s; }
+      .fx-flow > .fx-stage:nth-child(7) { animation-delay: 4.5s; }
+      @keyframes fxStage {
+        0%, 28%, 100% {
+          border-color: var(--edge);
+          background: rgba(255, 255, 255, 0.02);
+          box-shadow: 0 0 0 0 rgba(168, 121, 244, 0);
+        }
+        7%, 21% {
+          border-color: color-mix(in srgb, var(--purple) 60%, var(--edge));
+          background: color-mix(in srgb, var(--purple) 7%, transparent);
+          box-shadow: 0 0 24px -2px rgba(168, 121, 244, 0.4);
         }
       }
-      .hub-col {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .hub-stack {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 8px;
-      }
-      .hub-clabel {
+      .fx-stage-label {
+        display: block;
         font-family: var(--font-mono);
         font-size: 9.5px;
-        letter-spacing: 0.07em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--ink-faint);
-        text-align: center;
-        white-space: nowrap;
-        margin-bottom: 2px;
+        margin-bottom: 9px;
       }
-      .hub-txt {
+      .fx-nodes {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+      }
+      .fx-node {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 38px;
-        padding: 6px;
+        min-height: 40px;
+        padding: 6px 4px;
         border: 1px solid var(--edge);
-        border-radius: 9px;
+        border-radius: 8px;
         background: var(--surface);
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 500;
         color: var(--ink);
         text-align: center;
         line-height: 1.15;
       }
-      /* Connectors: curved wires converging from the inputs to a node by the gateway,
-         and diverging from the gateway out to each output — each end capped with a
-         circle. The wires are dashed and march toward the flow direction. */
-      .hub-conn {
-        position: relative;
-        align-self: stretch;
-        min-width: 42px;
-      }
-      .hub-wire {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-      }
-      .hub-wire path {
-        fill: none;
-        stroke: color-mix(in srgb, var(--purple) 55%, var(--edge));
-        stroke-width: 1.5;
-        vector-effect: non-scaling-stroke;
-        stroke-dasharray: 3 5;
-        animation: wireFlow 0.9s linear infinite;
-      }
-      @keyframes wireFlow {
-        to { stroke-dashoffset: -8; }
-      }
-      .hub-dot {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        margin-top: -4px;
-        border-radius: 50%;
-        background: var(--surface);
-        border: 1.5px solid color-mix(in srgb, var(--purple) 65%, var(--edge));
-        z-index: 2;
-      }
-      .hub-conn-l .hub-dot { left: -4px; }
-      .hub-conn-r .hub-dot { right: -4px; }
-      .hub-dot.d1 { top: 18%; }
-      .hub-dot.d2 { top: 42%; }
-      .hub-dot.d3 { top: 66%; }
-      .hub-dot.d4 { top: 90%; }
-      .hub-junction {
-        position: absolute;
-        top: 50%;
-        margin-top: -4.5px;
-        width: 9px;
-        height: 9px;
-        border-radius: 50%;
-        background: var(--purple);
-        box-shadow: 0 0 8px 1px rgba(168, 121, 244, 0.75);
-        z-index: 2;
-      }
-      .hub-conn-l .hub-junction { right: -4.5px; }
-      .hub-conn-r .hub-junction { left: -4.5px; }
-      .hub-core {
-        border: 1px solid color-mix(in srgb, var(--purple) 48%, var(--edge));
-        border-radius: 14px;
-        padding: 13px;
-        background:
-          radial-gradient(130% 130% at 50% 0%, rgba(168, 121, 244, 0.16), transparent 62%),
-          var(--surface);
-        box-shadow: 0 12px 32px -18px rgba(88, 60, 160, 0.6);
-        animation: hubPulse 3.4s ease-in-out infinite;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-      .hub-core-top {
+      /* The Fulcrum stage — the emphasised centre. */
+      .fx-stage-core {
         display: flex;
         align-items: center;
-        gap: 9px;
+        justify-content: center;
+        gap: 12px;
+        border-color: color-mix(in srgb, var(--purple) 45%, var(--edge));
+        background:
+          radial-gradient(130% 150% at 50% 0%, rgba(168, 121, 244, 0.18), transparent 62%),
+          var(--surface);
+        animation: fxCore 6s ease-in-out infinite;
+        animation-delay: 1.5s;
       }
-      .hub-core-mark {
+      @keyframes fxCore {
+        0%, 28%, 100% {
+          border-color: color-mix(in srgb, var(--purple) 45%, var(--edge));
+          box-shadow: 0 10px 30px -16px rgba(88, 60, 160, 0.55);
+        }
+        7%, 21% {
+          border-color: var(--purple);
+          box-shadow:
+            0 0 28px -2px rgba(168, 121, 244, 0.5),
+            0 10px 30px -16px rgba(88, 60, 160, 0.55);
+        }
+      }
+      .fx-core-mark {
         flex: none;
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
         display: grid;
         place-items: center;
         background: var(--grad);
         color: #0a0a16;
       }
-      .hub-core-top b {
+      .fx-core-txt {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+      }
+      .fx-core-txt b {
         font-family: var(--font-display);
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
-      .hub-core-top span {
-        display: block;
-        color: var(--ink-faint);
-        font-size: 8.5px;
+      .fx-core-txt small {
         font-family: var(--font-mono);
-        letter-spacing: 0.09em;
+        font-size: 9px;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-top: 3px;
       }
-      .hub-pills {
-        margin-top: 34px;
+      /* Particle links between stages. */
+      .fx-link {
+        position: relative;
+        height: 26px;
+      }
+      .fx-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1px;
+        width: 2px;
+        background: linear-gradient(var(--edge), color-mix(in srgb, var(--purple) 45%, var(--edge)));
+      }
+      .fx-particle {
+        position: absolute;
+        left: 50%;
+        margin-left: -3px;
+        top: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--purple);
+        box-shadow: 0 0 8px 1px rgba(168, 121, 244, 0.85);
+        animation: fxDrop 1.5s linear infinite;
+      }
+      .fx-particle-2 {
+        animation-delay: 0.75s;
+      }
+      @keyframes fxDrop {
+        0% { transform: translateY(-4px); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: translateY(26px); opacity: 0; }
+      }
+      /* The 5-step journey below the workflow. */
+      .fx-journey {
+        list-style: none;
+        margin: 22px 0 0;
+        padding: 0;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
+        gap: 9px;
       }
-      .hub-pill {
-        padding: 8px 4px;
+      .fx-journey li {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .fx-jn {
+        flex: none;
+        width: 26px;
+        height: 26px;
         border-radius: 8px;
-        text-align: center;
-        border: 1px solid color-mix(in srgb, var(--purple) 32%, var(--edge));
-        background: rgba(168, 121, 244, 0.06);
+        display: grid;
+        place-items: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 12px;
+        color: var(--purple);
+        background: rgba(168, 121, 244, 0.1);
+        border: 1px solid rgba(168, 121, 244, 0.28);
+      }
+      .fx-jt {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+      }
+      .fx-jt b {
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: 11.5px;
+        font-size: 13px;
         color: var(--ink);
       }
-      /* The flow, choreographed on one 4s loop: all four inputs light together as they
-         enter Fulcrum, then the gateway selects each function in order (Triage →
-         Diagnose → Remediate → Govern), then all four outputs light together. */
-      .hub-txt {
-        animation: flowChip 4s ease-in-out infinite;
+      .fx-jt small {
+        font-size: 12px;
+        color: var(--ink-muted);
       }
-      .hub-pill {
-        animation: flowPill 4s ease-in-out infinite;
-      }
-      .fulcrum-hub > .hub-col:first-of-type .hub-txt { animation-delay: 0s; }
-      .hub-pill:nth-child(1) { animation-delay: 0.8s; }
-      .hub-pill:nth-child(2) { animation-delay: 1.3s; }
-      .hub-pill:nth-child(3) { animation-delay: 1.8s; }
-      .hub-pill:nth-child(4) { animation-delay: 2.3s; }
-      .fulcrum-hub > .hub-col:last-of-type .hub-txt { animation-delay: 2.9s; }
-      /* Inputs & outputs: an outlined glow — a signal lighting up as it passes. */
-      @keyframes flowChip {
-        0%, 8%, 100% {
-          border-color: var(--edge);
-          box-shadow: 0 0 0 0 rgba(168, 121, 244, 0);
-        }
-        3%, 6% {
-          border-color: color-mix(in srgb, var(--purple) 70%, var(--edge));
-          box-shadow: 0 0 12px 0 rgba(168, 121, 244, 0.5);
-        }
-      }
-      /* Gateway functions: a solid "selected" fill with dark text — a chosen step. */
-      @keyframes flowPill {
-        0%, 8%, 100% {
-          border-color: color-mix(in srgb, var(--purple) 32%, var(--edge));
-          background: rgba(168, 121, 244, 0.06);
-          color: var(--ink);
-          box-shadow: 0 0 0 0 rgba(168, 121, 244, 0);
-        }
-        3%, 6% {
-          border-color: transparent;
-          background: var(--grad);
-          color: #0a0a16;
-          box-shadow: 0 0 18px 1px rgba(168, 121, 244, 0.55);
-        }
-      }
-      @keyframes hubPulse {
-        0%, 100% { box-shadow: 0 12px 32px -18px rgba(88, 60, 160, 0.6); }
-        50% { box-shadow: 0 12px 38px -14px rgba(132, 92, 232, 0.82); }
-      }
-      @media (max-width: 540px) {
-        .hub-conn {
-          justify-self: center;
-          min-width: 0;
-          width: 100%;
-          height: 24px;
-        }
-        .hub-wire,
-        .hub-dot {
-          display: none;
-        }
-        .hub-conn::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 50%;
-          margin-left: -1px;
-          width: 2px;
-          background: color-mix(in srgb, var(--purple) 45%, var(--edge));
-        }
-        .hub-junction {
-          left: 50%;
-          right: auto;
-          margin-left: -4.5px;
-          top: calc(50% - 4.5px);
+      @media (max-width: 640px) {
+        .fx-nodes {
+          grid-template-columns: 1fr 1fr;
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .hub-wire path,
-        .hub-core,
-        .hub-txt,
-        .hub-pill {
+        .fx-stage,
+        .fx-stage-core,
+        .fx-particle {
           animation: none;
         }
       }
@@ -1351,55 +1306,59 @@
               </div>
             </div>
 
-            <div class="fulcrum-hub" aria-label="How Fulcrum works">
-              <div class="hub-col">
-                <span class="hub-clabel">Signals in</span>
-                <div class="hub-stack">
-                  <span class="hub-txt">Builds</span>
-                  <span class="hub-txt">Deploys</span>
-                  <span class="hub-txt">Security</span>
-                  <span class="hub-txt">Tickets</span>
+            <div class="fx-flow" aria-label="How Fulcrum works, end to end">
+              <div class="fx-stage" data-stage="ingest">
+                <span class="fx-stage-label">Signals in</span>
+                <div class="fx-nodes">
+                  <span class="fx-node">Builds</span>
+                  <span class="fx-node">Deploys</span>
+                  <span class="fx-node">Security</span>
+                  <span class="fx-node">Tickets</span>
                 </div>
               </div>
 
-              <div class="hub-conn hub-conn-l" aria-hidden="true">
-                <svg class="hub-wire" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M3 18C20 18 20 50 37 50" /><path d="M3 42C20 42 22 50 37 50" /><path d="M3 66C20 66 22 50 37 50" /><path d="M3 90C20 90 20 50 37 50" /></svg>
-                <span class="hub-dot d1"></span><span class="hub-dot d2"></span><span class="hub-dot d3"></span><span class="hub-dot d4"></span>
-                <span class="hub-junction"></span>
+              <div class="fx-link" aria-hidden="true"><i class="fx-particle"></i><i class="fx-particle fx-particle-2"></i></div>
+
+              <div class="fx-stage fx-stage-core" data-stage="fulcrum">
+                <span class="fx-core-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l7-5 4 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="19.5" r="1.5" fill="currentColor" /></svg></span>
+                <span class="fx-core-txt">
+                  <b>Fulcrum</b>
+                  <small>Governed AI</small>
+                </span>
               </div>
 
-              <div class="hub-core">
-                <div class="hub-core-top">
-                  <span class="hub-core-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l7-5 4 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="19.5" r="1.5" fill="currentColor" /></svg></span>
-                  <div>
-                    <b>Fulcrum</b>
-                    <span>Governed AI Powered</span>
-                  </div>
+              <div class="fx-link" aria-hidden="true"><i class="fx-particle"></i><i class="fx-particle fx-particle-2"></i></div>
+
+              <div class="fx-stage" data-stage="reason">
+                <span class="fx-stage-label">Reasoning</span>
+                <div class="fx-nodes fx-nodes-seq">
+                  <span class="fx-node">Triage</span>
+                  <span class="fx-node">Diagnose</span>
+                  <span class="fx-node">Remediate</span>
+                  <span class="fx-node">Govern</span>
                 </div>
-                <div class="hub-pills">
-                  <span class="hub-pill">Triage</span>
-                  <span class="hub-pill">Diagnose</span>
-                  <span class="hub-pill">Remediate</span>
-                  <span class="hub-pill">Govern</span>
-                </div>
               </div>
 
-              <div class="hub-conn hub-conn-r" aria-hidden="true">
-                <svg class="hub-wire" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M3 50C18 50 20 18 37 18" /><path d="M3 50C18 50 18 42 37 42" /><path d="M3 50C18 50 18 66 37 66" /><path d="M3 50C18 50 20 90 37 90" /></svg>
-                <span class="hub-junction"></span>
-                <span class="hub-dot d1"></span><span class="hub-dot d2"></span><span class="hub-dot d3"></span><span class="hub-dot d4"></span>
-              </div>
+              <div class="fx-link" aria-hidden="true"><i class="fx-particle"></i><i class="fx-particle fx-particle-2"></i></div>
 
-              <div class="hub-col">
-                <span class="hub-clabel">What you get</span>
-                <div class="hub-stack">
-                  <span class="hub-txt">Pull requests</span>
-                  <span class="hub-txt">Approvals</span>
-                  <span class="hub-txt">Audit trail</span>
-                  <span class="hub-txt">DORA metrics</span>
+              <div class="fx-stage" data-stage="deliver">
+                <span class="fx-stage-label">What you get</span>
+                <div class="fx-nodes">
+                  <span class="fx-node">Pull Request</span>
+                  <span class="fx-node">Human Approval</span>
+                  <span class="fx-node">Audit Trail</span>
+                  <span class="fx-node">DORA Metrics</span>
                 </div>
               </div>
             </div>
+
+            <ol class="fx-journey" aria-label="The Fulcrum journey">
+              <li><span class="fx-jn">1</span><span class="fx-jt"><b>Ingest</b><small>Collect signals</small></span></li>
+              <li><span class="fx-jn">2</span><span class="fx-jt"><b>Understand</b><small>AI finds the why</small></span></li>
+              <li><span class="fx-jn">3</span><span class="fx-jt"><b>Act</b><small>Propose &amp; fix</small></span></li>
+              <li><span class="fx-jn">4</span><span class="fx-jt"><b>Govern</b><small>Human approves</small></span></li>
+              <li><span class="fx-jn">5</span><span class="fx-jt"><b>Learn</b><small>Improve over time</small></span></li>
+            </ol>
           </div>
 
           <div class="caps">
@@ -1420,8 +1379,8 @@
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" /><circle cx="12" cy="15.5" r="1.2" fill="currentColor" /></svg></span>
-              <b>Security &amp; compliance</b>
-              <span class="d">Audit-ready by design. SSO, role-based access, and vaulted secrets — plus a tamper-evident record that yields SOC&nbsp;2 and EU AI Act evidence in one click.</span>
+              <b>Security &amp; governance</b>
+              <span class="d">Audit-ready by design. SSO, role-based access, and vaulted secrets — plus a tamper-evident record that produces a verifiable evidence pack for a security or compliance review.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l4-4 4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
