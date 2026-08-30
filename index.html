@@ -418,23 +418,11 @@
           radial-gradient(90% 120% at 100% 0%, rgba(168, 121, 244, 0.1), transparent 55%),
           radial-gradient(70% 100% at 0% 100%, rgba(77, 139, 255, 0.1), transparent 55%),
           var(--surface);
-        display: grid;
-        grid-template-columns: 1fr 1.12fr;
-      }
-      @media (max-width: 900px) {
-        .fulcrum-card {
-          grid-template-columns: 1fr;
-        }
+        display: block;
       }
       .fulcrum-main {
         padding: clamp(30px, 4vw, 48px);
-        border-right: 1px solid var(--edge);
-      }
-      @media (max-width: 900px) {
-        .fulcrum-main {
-          border-right: none;
-          border-bottom: 1px solid var(--edge);
-        }
+        border-bottom: 1px solid var(--edge);
       }
       .fulcrum-top {
         display: flex;
@@ -574,109 +562,202 @@
         gap: 12px;
         align-items: center;
       }
-      /* The governed flow — vertical step cards joined by animated down-arrows, in
-         the same card + arrow style as the "Data → Intelligence → Action" flow up
-         top. A glow travels through the steps and the arrows drift down, so the
-         panel reads as a live flow rather than static prose. */
-      .fulcrum-flow {
-        margin-top: 32px;
-        padding-top: 28px;
+      /* The governed-flow hub — a horizontal "signals in → Fulcrum → what you get"
+         diagram in the litellm.ai style: two flanking groups feed an emphasised
+         gateway card, joined by connectors that pulse a node across them. The gateway
+         breathes; the connector nodes flow. Stacks vertically on narrow screens, and
+         all motion is disabled under prefers-reduced-motion. */
+      .fulcrum-hub {
+        margin-top: 34px;
+        padding-top: 30px;
         border-top: 1px solid var(--edge);
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: 1fr auto 1.3fr auto 1fr;
+        align-items: center;
+        gap: 4px;
       }
-      .ff-step {
-        background: var(--surface);
+      @media (max-width: 900px) {
+        .fulcrum-hub {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+      }
+      .hub-col {
         border: 1px solid var(--edge);
-        border-radius: 14px;
-        padding: 17px 18px;
+        border-radius: 15px;
+        padding: 15px 15px 16px;
+        background: rgba(255, 255, 255, 0.02);
       }
-      .ff-sic {
-        width: 40px;
-        height: 40px;
-        border-radius: 11px;
+      .hub-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 12px;
+      }
+      .hub-items {
+        display: grid;
+        gap: 9px;
+      }
+      .hub-item {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 10px;
+        border: 1px solid var(--edge);
+        border-radius: 10px;
+        background: var(--surface);
+        font-size: 12.5px;
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.2;
+      }
+      .hub-ic {
+        flex: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
         display: grid;
         place-items: center;
         color: var(--purple);
         background: rgba(168, 121, 244, 0.12);
-        border: 1px solid rgba(168, 121, 244, 0.28);
-        animation: ffGlow 4.2s ease-in-out infinite;
+        border: 1px solid rgba(168, 121, 244, 0.26);
       }
-      .ff-step:nth-child(1) .ff-sic {
-        animation-delay: 0s;
+      .hub-ic svg {
+        width: 16px;
+        height: 16px;
       }
-      .ff-step:nth-child(3) .ff-sic {
-        animation-delay: 1.4s;
+      .hub-core {
+        border: 1px solid color-mix(in srgb, var(--purple) 48%, var(--edge));
+        border-radius: 18px;
+        padding: 20px;
+        background:
+          radial-gradient(130% 130% at 50% 0%, rgba(168, 121, 244, 0.18), transparent 62%),
+          var(--surface);
+        box-shadow: 0 16px 40px -18px rgba(88, 60, 160, 0.6);
+        animation: hubPulse 3.4s ease-in-out infinite;
       }
-      .ff-step:nth-child(5) .ff-sic {
-        animation-delay: 2.8s;
+      .hub-core-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
       }
-      .ff-sic svg {
-        width: 20px;
-        height: 20px;
-      }
-      .ff-step h4 {
-        font-family: var(--font-display);
-        font-weight: 600;
-        font-size: 1.02rem;
-        margin-top: 13px;
-      }
-      .ff-step p {
-        margin-top: 5px;
-        color: var(--ink-muted);
-        font-size: 13.5px;
-        line-height: 1.55;
-      }
-      .ff-arrow {
+      .hub-core-mark {
+        flex: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
         display: grid;
         place-items: center;
-        color: var(--purple);
-        padding: 7px 0;
+        background: var(--grad);
+        color: #0a0a16;
       }
-      .ff-arrow svg {
-        width: 22px;
-        height: 22px;
-        animation: ffDown 1.5s ease-in-out infinite;
+      .hub-core-top b {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.2rem;
       }
-      .ff-arrow:nth-child(4) svg {
-        animation-delay: 0.4s;
+      .hub-core-top span {
+        display: block;
+        color: var(--ink-faint);
+        font-size: 11px;
+        font-family: var(--font-mono);
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
       }
-      @keyframes ffDown {
-        0%,
-        100% {
-          transform: translateY(0);
-          opacity: 0.4;
+      .hub-caps {
+        list-style: none;
+        margin: 15px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+      }
+      .hub-caps li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border: 1px solid var(--edge);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .hub-caps li::before {
+        content: "";
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--grad);
+      }
+      .hub-conn {
+        position: relative;
+        align-self: center;
+        min-width: 30px;
+        height: 2px;
+      }
+      .hub-conn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--purple) 38%, var(--edge)),
+          color-mix(in srgb, var(--purple) 55%, var(--edge))
+        );
+      }
+      .hub-conn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        margin-top: -4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--purple);
+        box-shadow: 0 0 10px 1px rgba(168, 121, 244, 0.8);
+        animation: hubFlow 1.9s linear infinite;
+      }
+      @keyframes hubFlow {
+        0% { left: -4px; opacity: 0; }
+        15% { opacity: 1; }
+        85% { opacity: 1; }
+        100% { left: calc(100% - 4px); opacity: 0; }
+      }
+      @keyframes hubPulse {
+        0%, 100% { box-shadow: 0 16px 40px -18px rgba(88, 60, 160, 0.6); }
+        50% { box-shadow: 0 16px 46px -14px rgba(132, 92, 232, 0.82); }
+      }
+      @media (max-width: 900px) {
+        .hub-conn {
+          justify-self: center;
+          width: 2px;
+          height: 28px;
+          min-width: 0;
         }
-        50% {
-          transform: translateY(5px);
-          opacity: 1;
-        }
-      }
-      @keyframes ffGlow {
-        0%,
-        62%,
-        100% {
-          box-shadow: 0 0 0 0 rgba(168, 121, 244, 0);
-          border-color: rgba(168, 121, 244, 0.28);
-        }
-        12%,
-        22% {
-          box-shadow: 0 0 15px 1px rgba(168, 121, 244, 0.5);
-          border-color: rgba(168, 121, 244, 0.75);
+        .hub-conn::after {
+          left: 50%;
+          margin-left: -4px;
+          top: calc(50% - 4px);
+          margin-top: 0;
+          animation: none;
         }
       }
       @media (prefers-reduced-motion: reduce) {
-        .ff-sic,
-        .ff-arrow svg {
+        .hub-conn::after,
+        .hub-core {
           animation: none;
         }
       }
       .caps {
-        padding: clamp(24px, 3vw, 34px);
+        padding: clamp(24px, 3vw, 40px);
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
         align-content: start;
       }
       @media (max-width: 560px) {
@@ -1241,23 +1322,46 @@
               </div>
             </div>
 
-            <div class="fulcrum-flow" aria-label="How Fulcrum works, end to end">
-              <div class="ff-step">
-                <span class="ff-sic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 00-6 6c0 5-2 6-2 6h16s-2-1-2-6a6 6 0 00-6-6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><path d="M10 20a2 2 0 004 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
-                <h4>Detects a signal</h4>
-                <p>A failed build, a broken deploy, a security finding, or a ticket.</p>
+            <div class="fulcrum-hub" aria-label="How Fulcrum works, end to end">
+              <div class="hub-col">
+                <span class="hub-label">Signals in</span>
+                <div class="hub-items">
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5l9 16H3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><path d="M12 10v4M12 16.5v.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>Build failures</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V6M6 12l6-6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>Deploy failures</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M12 9v3.5M12 15.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></span>Security findings</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8a2 2 0 012-2h7l7 7-7 7-7-7V8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><circle cx="8.5" cy="10.5" r="1.3" fill="currentColor" /></svg></span>Tickets</span>
+                </div>
               </div>
-              <div class="ff-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ff-step">
-                <span class="ff-sic"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
-                <h4>Diagnoses &amp; drafts a fix</h4>
-                <p>Reads the logs, finds the root cause, and opens a pull request through your review.</p>
+
+              <div class="hub-conn"></div>
+
+              <div class="hub-core">
+                <div class="hub-core-top">
+                  <span class="hub-core-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l7-5 4 3 7-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><circle cx="12" cy="19.5" r="1.5" fill="currentColor" /></svg></span>
+                  <div>
+                    <b>Fulcrum</b>
+                    <span>Governed AI agent</span>
+                  </div>
+                </div>
+                <ul class="hub-caps">
+                  <li>Root-cause reasoning</li>
+                  <li>Human-approval gates</li>
+                  <li>Policy &amp; budget guardrails</li>
+                  <li>Tamper-evident audit trail</li>
+                  <li>Institutional memory</li>
+                </ul>
               </div>
-              <div class="ff-arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
-              <div class="ff-step">
-                <span class="ff-sic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.3 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
-                <h4>Governs, ships &amp; records</h4>
-                <p>Policy-checked, human-approved, and written to a tamper-evident audit trail.</p>
+
+              <div class="hub-conn"></div>
+
+              <div class="hub-col">
+                <span class="hub-label">What you get</span>
+                <div class="hub-items">
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.4" stroke="currentColor" stroke-width="1.7" /><circle cx="6" cy="18" r="2.4" stroke="currentColor" stroke-width="1.7" /><circle cx="18" cy="18" r="2.4" stroke="currentColor" stroke-width="1.7" /><path d="M6 8.4v7.2M18 15.6V11a3 3 0 00-3-3H9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>Reviewed pull requests</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4-3 7-7 8-4-1-7-4-7-8V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.3 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>Human-approved merges</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="3" width="12" height="18" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></svg></span>Evidence &amp; audit</span>
+                  <span class="hub-item"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /><path d="M8 15l3-3 3 2 4-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>DORA metrics</span>
+                </div>
               </div>
             </div>
           </div>
