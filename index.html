@@ -755,7 +755,9 @@
         stroke: color-mix(in srgb, var(--purple) 58%, var(--edge));
         animation: fxStream 1.1s linear infinite;
       }
-      .fx-wire--out .fx-flowline { animation-direction: reverse; }
+      /* Both wire groups are drawn left→right, and the paths already run the right
+         way (chips→Fulcrum on the left, Fulcrum→outputs on the right), so the same
+         forward stream flows into Fulcrum on the left and out to results on the right. */
       @keyframes fxStream { to { stroke-dashoffset: -16; } }
       /* Fulcrum — the emphasised centre. */
       .fx-brain {
@@ -944,6 +946,11 @@
         transition: gap 0.18s ease, color 0.18s ease;
       }
       .fx-cta-link:hover { gap: 10px; color: var(--ink); }
+      /* Side-by-side, pin the banner to the panel's bottom so the left and right
+         columns end on the same line regardless of which is marginally taller. */
+      @media (min-width: 901px) {
+        .fx-cta { margin-top: auto; }
+      }
       /* Tablet/mobile: the hub stacks and the wires give way to a compact flow. */
       @media (max-width: 620px) {
         .fx-hub {
@@ -1057,6 +1064,26 @@
         color: var(--ink-muted);
         font-size: 13px;
         line-height: 1.5;
+      }
+      /* A short proof-point pinned to the bottom of each card — fills the space a
+         stretched card would otherwise leave blank, and keeps the six bottoms level. */
+      .cap-foot {
+        margin-top: auto;
+        padding-top: 11px;
+        border-top: 1px solid var(--edge);
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.03em;
+        color: var(--ink-faint);
+      }
+      .cap-foot svg {
+        flex: none;
+        width: 13px;
+        height: 13px;
+        color: var(--purple);
       }
       /* The accented tail of the Fulcrum headline. */
       .fulcrum-main h2 .hl {
@@ -1631,31 +1658,37 @@
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Root-cause intelligence</b>
               <span class="d">Pinpoints the root cause of a failed build or deploy — so engineers fix in minutes, not hunt for hours.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Evidence-linked diagnosis</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 108-8 8 8 0 00-6.9 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /><path d="M5 4v4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Institutional memory</b>
               <span class="d">Recognises a failure it has seen before and reuses the fix that worked — your incident history, applied automatically.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Learns from every fix</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Governed fixes, human-approved</b>
               <span class="d">Every fix ships as a pull request. AI proposes; your policies and your people decide what merges.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Nothing merges unreviewed</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" /><circle cx="12" cy="15.5" r="1.2" fill="currentColor" /></svg></span>
               <b>Security &amp; governance</b>
               <span class="d">Audit-ready by design: SSO, role-based access, vaulted secrets, and a tamper-evident record you can hand to any review.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>SSO · RBAC · audit log</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l4-4 4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Measured value &amp; reliability</b>
               <span class="d">DORA metrics, step-latency SLOs, and eval-gated changes make reliability provable — with budget caps that keep spend predictable.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>DORA · SLOs · budget caps</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M10 6.5h4a3 3 0 013 3v4" stroke="currentColor" stroke-width="1.7" /></svg></span>
               <b>Plug-and-play, vendor-neutral</b>
               <span class="d">Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Jenkins, AWS. No rip-and-replace, no lock-in.</span>
+              <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Live in weeks, not months</span>
             </div>
           </div>
         </div>
