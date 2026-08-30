@@ -574,6 +574,75 @@
         gap: 12px;
         align-items: center;
       }
+      /* "How it works" stepper — fills the hero panel with the governed flow the
+         cards don't tell, as four numbered steps joined by a connecting rail. */
+      .fulcrum-flow {
+        margin-top: 34px;
+        padding-top: 28px;
+        border-top: 1px solid var(--edge);
+      }
+      .ff-head {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 18px;
+      }
+      .ff-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .ff-list li {
+        position: relative;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+      .ff-list li:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        left: 14px;
+        top: 32px;
+        bottom: -18px;
+        width: 2px;
+        background: var(--edge);
+      }
+      .ff-num {
+        flex: none;
+        width: 29px;
+        height: 29px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--purple);
+        background: rgba(168, 121, 244, 0.13);
+        border: 1px solid rgba(168, 121, 244, 0.32);
+      }
+      .ff-body {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-top: 3px;
+      }
+      .ff-body b {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--ink);
+      }
+      .ff-body span {
+        color: var(--ink-muted);
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
       .caps {
         padding: clamp(24px, 3vw, 34px);
         display: grid;
@@ -1126,11 +1195,8 @@
             <div class="fulcrum-label">Governed AI for software delivery</div>
             <h2>From a red pipeline to a fix your team <span class="hl">can trust.</span></h2>
             <p class="fulcrum-desc">
-              Fulcrum is an agentic teammate for the delivery pipeline. When a build
-              fails or a deploy breaks, it reads the logs, pinpoints the root cause,
-              and drafts the smallest fix as a pull request that runs through your
-              normal review — a human still approves the merge. Every step is
-              policy-checked, budget-bounded, and written to a tamper-evident record,
+              Fulcrum is an agentic teammate for the delivery pipeline. Every step is
+              policy-checked, budget-bounded, and written to a tamper-evident record —
               so the automation is auditable, never taken on faith.
             </p>
 
@@ -1144,6 +1210,40 @@
                   <span class="led"></span><span class="fx-text">Checking…</span>
                 </span>
               </div>
+            </div>
+
+            <div class="fulcrum-flow">
+              <div class="ff-head">How it works</div>
+              <ol class="ff-list">
+                <li>
+                  <span class="ff-num">1</span>
+                  <div class="ff-body">
+                    <b>A build or deploy fails</b>
+                    <span>An event arrives from your pipeline.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="ff-num">2</span>
+                  <div class="ff-body">
+                    <b>Fulcrum diagnoses the root cause</b>
+                    <span>It reads the logs and forms a hypothesis.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="ff-num">3</span>
+                  <div class="ff-body">
+                    <b>It drafts the smallest fix</b>
+                    <span>Opens a pull request and runs your CI.</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="ff-num">4</span>
+                  <div class="ff-body">
+                    <b>Your team approves and merges</b>
+                    <span>A human owns the merge — always.</span>
+                  </div>
+                </li>
+              </ol>
             </div>
           </div>
 
