@@ -944,11 +944,6 @@
         transition: gap 0.18s ease, color 0.18s ease;
       }
       .fx-cta-link:hover { gap: 10px; color: var(--ink); }
-      /* When the card is side-by-side, let the banner drop to the bottom so the
-         left panel spans the same height as the six feature cards. */
-      @media (min-width: 901px) {
-        .fx-cta { margin-top: auto; }
-      }
       /* Tablet/mobile: the hub stacks and the wires give way to a compact flow. */
       @media (max-width: 620px) {
         .fx-hub {
@@ -992,19 +987,22 @@
         padding: clamp(24px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
-        align-content: start;
+        grid-auto-rows: 1fr;
+        gap: 13px;
+        align-content: stretch;
       }
       @media (max-width: 560px) {
         .caps {
           grid-template-columns: 1fr;
+          grid-auto-rows: auto;
         }
       }
       .cap {
+        height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 13px;
-        padding: 22px;
+        gap: 9px;
+        padding: 18px;
         border-radius: 14px;
         background: rgba(255, 255, 255, 0.025);
         border: 1px solid var(--edge);
@@ -1021,9 +1019,9 @@
         box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.55);
       }
       .cap .ic {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
         display: grid;
         place-items: center;
         background: rgba(168, 121, 244, 0.14);
@@ -1031,18 +1029,18 @@
         color: var(--purple);
       }
       .cap .ic svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
       }
       .cap b {
         position: relative;
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: 1.06rem;
-        line-height: 1.28;
+        font-size: 0.98rem;
+        line-height: 1.25;
         letter-spacing: -0.005em;
         color: var(--ink);
-        padding-bottom: 9px;
+        padding-bottom: 8px;
       }
       /* A short gradient underline under each card title — a small mark of polish. */
       .cap b::after {
@@ -1050,15 +1048,15 @@
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 26px;
+        width: 24px;
         height: 2px;
         border-radius: 2px;
         background: var(--grad);
       }
       .cap .d {
         color: var(--ink-muted);
-        font-size: 14.5px;
-        line-height: 1.62;
+        font-size: 13px;
+        line-height: 1.5;
       }
       /* The accented tail of the Fulcrum headline. */
       .fulcrum-main h2 .hl {
@@ -1632,32 +1630,32 @@
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Root-cause intelligence</b>
-              <span class="d">Cut MTTR from hours to minutes. Fulcrum pinpoints the root cause of a failed build or deploy — so engineers fix, not hunt.</span>
+              <span class="d">Pinpoints the root cause of a failed build or deploy — so engineers fix in minutes, not hunt for hours.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 108-8 8 8 0 00-6.9 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /><path d="M5 4v4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Institutional memory</b>
-              <span class="d">Never solves the same failure twice. Fulcrum recognises a recurring failure and applies the fix that already worked — your whole incident history, put to work automatically.</span>
+              <span class="d">Recognises a failure it has seen before and reuses the fix that worked — your incident history, applied automatically.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Governed fixes, human-approved</b>
-              <span class="d">AI that proposes, never disposes. Every fix ships as a pull request through your review — your policies and your people decide what merges.</span>
+              <span class="d">Every fix ships as a pull request. AI proposes; your policies and your people decide what merges.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" /><circle cx="12" cy="15.5" r="1.2" fill="currentColor" /></svg></span>
               <b>Security &amp; governance</b>
-              <span class="d">Audit-ready by design. SSO, role-based access, and vaulted secrets — plus a tamper-evident record that produces a verifiable evidence pack for a security or compliance review.</span>
+              <span class="d">Audit-ready by design: SSO, role-based access, vaulted secrets, and a tamper-evident record you can hand to any review.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l4-4 4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Measured value &amp; reliability</b>
-              <span class="d">Numbers for the board. DORA metrics, step-latency SLOs, and eval-gated changes make reliability provable — while per-run budget caps and an instant kill-switch keep AI spend forecastable.</span>
+              <span class="d">DORA metrics, step-latency SLOs, and eval-gated changes make reliability provable — with budget caps that keep spend predictable.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M10 6.5h4a3 3 0 013 3v4" stroke="currentColor" stroke-width="1.7" /></svg></span>
               <b>Plug-and-play, vendor-neutral</b>
-              <span class="d">Value in weeks, not a re-platforming. Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Azure, Jenkins, AWS. No rip-and-replace, no lock-in.</span>
+              <span class="d">Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Jenkins, AWS. No rip-and-replace, no lock-in.</span>
             </div>
           </div>
         </div>
