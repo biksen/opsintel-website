@@ -415,14 +415,26 @@
         border-radius: var(--radius);
         overflow: hidden;
         background:
-          radial-gradient(80% 90% at 100% 0%, rgba(168, 121, 244, 0.12), transparent 55%),
-          radial-gradient(70% 90% at 0% 100%, rgba(77, 139, 255, 0.1), transparent 55%),
+          radial-gradient(90% 120% at 100% 0%, rgba(168, 121, 244, 0.1), transparent 55%),
+          radial-gradient(70% 100% at 0% 100%, rgba(77, 139, 255, 0.1), transparent 55%),
           var(--surface);
-        display: block;
+        display: grid;
+        grid-template-columns: 1fr 1.12fr;
+      }
+      @media (max-width: 900px) {
+        .fulcrum-card {
+          grid-template-columns: 1fr;
+        }
       }
       .fulcrum-main {
-        padding: clamp(32px, 4.4vw, 56px);
-        border-bottom: 1px solid var(--edge);
+        padding: clamp(30px, 4vw, 48px);
+        border-right: 1px solid var(--edge);
+      }
+      @media (max-width: 900px) {
+        .fulcrum-main {
+          border-right: none;
+          border-bottom: 1px solid var(--edge);
+        }
       }
       .fulcrum-top {
         display: flex;
@@ -543,18 +555,17 @@
       }
       .fulcrum-main h2 {
         font-weight: 600;
-        font-size: clamp(1.9rem, 3.4vw, 2.55rem);
+        font-size: clamp(1.65rem, 2.8vw, 2.2rem);
         margin-top: 12px;
-        line-height: 1.08;
-        letter-spacing: -0.015em;
-        max-width: 22ch;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
       }
       .fulcrum-desc {
-        margin-top: 16px;
+        margin-top: 15px;
         color: var(--ink-muted);
-        max-width: 64ch;
-        font-size: 15.5px;
-        line-height: 1.72;
+        max-width: 54ch;
+        font-size: 15px;
+        line-height: 1.7;
       }
       .fulcrum-actions {
         margin-top: 28px;
@@ -564,11 +575,16 @@
         align-items: center;
       }
       .caps {
-        padding: clamp(24px, 3vw, 40px);
+        padding: clamp(24px, 3vw, 34px);
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
-        gap: 18px;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
         align-content: start;
+      }
+      @media (max-width: 560px) {
+        .caps {
+          grid-template-columns: 1fr;
+        }
       }
       .cap {
         display: flex;
@@ -1089,19 +1105,14 @@
               <span class="d">AI that proposes, never disposes. Every fix ships as a pull request through your review — your policies and your people decide what merges.</span>
             </div>
             <div class="cap">
-              <span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" /><path d="M12 7v10M14.6 8.9c-.6-.9-1.6-1.3-2.7-1.3-1.7 0-2.9.9-2.9 2.2 0 3.1 5.9 1.7 5.9 4.7 0 1.4-1.3 2.3-3 2.3-1.2 0-2.2-.5-2.9-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span>
-              <b>FinOps &amp; ROI</b>
-              <span class="d">Bounded spend, proven payback. Per-run budget caps and an instant kill-switch keep AI costs forecastable; hours saved and incidents avoided make the ROI a number you can show finance.</span>
-            </div>
-            <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" /><circle cx="12" cy="15.5" r="1.2" fill="currentColor" /></svg></span>
               <b>Security &amp; compliance</b>
               <span class="d">Audit-ready by design. SSO, role-based access, and vaulted secrets — plus a tamper-evident record that yields SOC&nbsp;2 and EU AI Act evidence in one click.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l4-4 4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
-              <b>Reliability, measured</b>
-              <span class="d">Delivery performance for the board. DORA metrics, step-latency SLOs, and eval-gated changes make reliability a number, not an anecdote.</span>
+              <b>Measured value &amp; reliability</b>
+              <span class="d">Numbers for the board. DORA metrics, step-latency SLOs, and eval-gated changes make reliability provable — while per-run budget caps and an instant kill-switch keep AI spend forecastable and the ROI one you can show finance.</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M10 6.5h4a3 3 0 013 3v4" stroke="currentColor" stroke-width="1.7" /></svg></span>
