@@ -597,7 +597,14 @@
       .hub-col {
         display: flex;
         flex-direction: column;
-        gap: 7px;
+        gap: 8px;
+      }
+      .hub-stack {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 8px;
       }
       .hub-clabel {
         font-family: var(--font-mono);
@@ -609,7 +616,11 @@
         margin-bottom: 2px;
       }
       .hub-txt {
-        padding: 9px 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 6px;
         border: 1px solid var(--edge);
         border-radius: 9px;
         background: var(--surface);
@@ -684,7 +695,7 @@
         animation: hubPulse 3.4s ease-in-out infinite;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
       }
       .hub-core-top {
         display: flex;
@@ -731,28 +742,21 @@
         font-size: 11.5px;
         color: var(--ink);
       }
-      /* The flow, choreographed on one 4.8s loop: the four inputs light up one at a
-         time as they enter Fulcrum, then the gateway selects each function in order
-         (Triage → Diagnose → Remediate → Govern), then the four outputs light out in
-         turn — a single wave from left to right. */
+      /* The flow, choreographed on one 4s loop: all four inputs light together as they
+         enter Fulcrum, then the gateway selects each function in order (Triage →
+         Diagnose → Remediate → Govern), then all four outputs light together. */
       .hub-txt {
-        animation: flowChip 4.8s ease-in-out infinite;
+        animation: flowChip 4s ease-in-out infinite;
       }
       .hub-pill {
-        animation: flowPill 4.8s ease-in-out infinite;
+        animation: flowPill 4s ease-in-out infinite;
       }
-      .fulcrum-hub > .hub-col:first-of-type .hub-txt:nth-child(2) { animation-delay: 0s; }
-      .fulcrum-hub > .hub-col:first-of-type .hub-txt:nth-child(3) { animation-delay: 0.4s; }
-      .fulcrum-hub > .hub-col:first-of-type .hub-txt:nth-child(4) { animation-delay: 0.8s; }
-      .fulcrum-hub > .hub-col:first-of-type .hub-txt:nth-child(5) { animation-delay: 1.2s; }
-      .hub-pill:nth-child(1) { animation-delay: 1.6s; }
-      .hub-pill:nth-child(2) { animation-delay: 2s; }
-      .hub-pill:nth-child(3) { animation-delay: 2.4s; }
-      .hub-pill:nth-child(4) { animation-delay: 2.8s; }
-      .fulcrum-hub > .hub-col:last-of-type .hub-txt:nth-child(2) { animation-delay: 3.2s; }
-      .fulcrum-hub > .hub-col:last-of-type .hub-txt:nth-child(3) { animation-delay: 3.6s; }
-      .fulcrum-hub > .hub-col:last-of-type .hub-txt:nth-child(4) { animation-delay: 4s; }
-      .fulcrum-hub > .hub-col:last-of-type .hub-txt:nth-child(5) { animation-delay: 4.4s; }
+      .fulcrum-hub > .hub-col:first-of-type .hub-txt { animation-delay: 0s; }
+      .hub-pill:nth-child(1) { animation-delay: 0.8s; }
+      .hub-pill:nth-child(2) { animation-delay: 1.3s; }
+      .hub-pill:nth-child(3) { animation-delay: 1.8s; }
+      .hub-pill:nth-child(4) { animation-delay: 2.3s; }
+      .fulcrum-hub > .hub-col:last-of-type .hub-txt { animation-delay: 2.9s; }
       @keyframes flowChip {
         0%, 8%, 100% {
           border-color: var(--edge);
@@ -1347,10 +1351,12 @@
             <div class="fulcrum-hub" aria-label="How Fulcrum works">
               <div class="hub-col">
                 <span class="hub-clabel">Signals in</span>
-                <span class="hub-txt">Builds</span>
-                <span class="hub-txt">Deploys</span>
-                <span class="hub-txt">Security</span>
-                <span class="hub-txt">Tickets</span>
+                <div class="hub-stack">
+                  <span class="hub-txt">Builds</span>
+                  <span class="hub-txt">Deploys</span>
+                  <span class="hub-txt">Security</span>
+                  <span class="hub-txt">Tickets</span>
+                </div>
               </div>
 
               <div class="hub-conn hub-conn-l" aria-hidden="true">
@@ -1383,10 +1389,12 @@
 
               <div class="hub-col">
                 <span class="hub-clabel">What you get</span>
-                <span class="hub-txt">Pull requests</span>
-                <span class="hub-txt">Approvals</span>
-                <span class="hub-txt">Audit trail</span>
-                <span class="hub-txt">DORA metrics</span>
+                <div class="hub-stack">
+                  <span class="hub-txt">Pull requests</span>
+                  <span class="hub-txt">Approvals</span>
+                  <span class="hub-txt">Audit trail</span>
+                  <span class="hub-txt">DORA metrics</span>
+                </div>
               </div>
             </div>
           </div>
