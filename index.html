@@ -899,6 +899,78 @@
         color: var(--ink-muted);
         margin-top: 2px;
       }
+      /* The loop caption — makes the journey read as a closed loop, not a line. */
+      .fx-loop-note {
+        margin: 14px 0 0;
+        font-size: 12.5px;
+        color: var(--ink-muted);
+        text-align: center;
+      }
+      .fx-loop-glyph {
+        color: var(--purple);
+        font-weight: 700;
+        margin-right: 4px;
+        font-size: 1.05em;
+      }
+      /* The autonomy ladder — a trust dial. Four rungs, low → high; a glow climbs them
+         so it reads as autonomy earned over time. The differentiator, made visible. */
+      .fx-ladder {
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--edge);
+      }
+      .fx-ladder-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 10px;
+      }
+      .fx-ladder-track {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+        align-items: end;
+      }
+      .fx-rung {
+        text-align: center;
+        padding: 9px 6px;
+        border: 1px solid var(--edge);
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.02);
+        font-family: var(--font-display);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink-muted);
+        animation: fxRung 8s ease-in-out infinite;
+        animation-delay: var(--d, 0s);
+      }
+      /* Ascending top-padding so the four read as a rising ladder. */
+      .fx-rung:nth-child(2) { padding-top: 12px; }
+      .fx-rung:nth-child(3) { padding-top: 15px; }
+      .fx-rung--peak {
+        padding-top: 18px;
+        color: var(--purple);
+        border-color: color-mix(in srgb, var(--purple) 45%, var(--edge));
+        background: color-mix(in srgb, var(--purple) 10%, transparent);
+      }
+      /* Glow only (border/bg stay per-rung), so the static ladder shape is preserved. */
+      @keyframes fxRung {
+        0%, 16%, 100% { box-shadow: 0 0 0 0 rgba(168, 121, 244, 0); }
+        4%, 9% {
+          box-shadow: 0 0 22px -6px rgba(168, 121, 244, 0.55);
+          border-color: color-mix(in srgb, var(--purple) 55%, var(--edge));
+        }
+      }
+      .fx-ladder-foot {
+        display: block;
+        margin-top: 12px;
+        font-size: 12.5px;
+        line-height: 1.4;
+        color: var(--ink-muted);
+      }
       /* Closing CTA banner — anchored to the bottom of the panel (side-by-side only,
          see media rule) so the left panel's height matches the six cards with no
          dead space beneath it. */
@@ -976,6 +1048,10 @@
           gap: 16px 10px;
         }
         .fx-journey li:not(:last-child)::after { display: none; }
+        .fx-ladder-track { grid-template-columns: repeat(2, 1fr); }
+        .fx-rung:nth-child(2),
+        .fx-rung:nth-child(3),
+        .fx-rung--peak { padding-top: 9px; }
         .fx-cta { flex-wrap: wrap; }
         .fx-spark { display: none; }
       }
@@ -987,6 +1063,7 @@
         .fx-fn,
         .fx-fn svg,
         .fx-flowline,
+        .fx-rung,
         .fx-spark-dot {
           animation: none;
         }
@@ -1567,15 +1644,17 @@
               </span>
             </div>
 
-            <!-- End-to-end workflow — the centrepiece. Signals converge into Fulcrum,
-                 the reasoning runs Triage→Diagnose→Remediate→Govern, and governed
-                 outputs flow out. Animated: inputs pulse together, the four functions
-                 light in sequence, then the outputs pulse; wires stream throughout.
-                 All motion is disabled under prefers-reduced-motion. -->
+            <!-- The governed self-healing loop — the centrepiece. Signals converge into
+                 Fulcrum, which runs the loop Diagnose→Remediate→Approve→Verify, and governed
+                 outputs (fixes, rollbacks, audit, DORA) flow out. Below: the loop drawn as a
+                 closed cycle, then the autonomy ladder (Observe→Propose→Approve→Auto), the
+                 trust dial an operator raises per repository. Animated: inputs pulse, the four
+                 acts light in sequence, wires stream, and a glow climbs the ladder. All motion
+                 is disabled under prefers-reduced-motion. -->
             <div class="fx-panel">
               <div class="fx-panel-head">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /></svg>
-                End-to-end workflow
+                The governed self-healing loop
               </div>
 
               <div class="fx-hub" aria-label="How Fulcrum works, end to end">
@@ -1607,10 +1686,10 @@
                     <span class="fx-brain-txt"><b>Fulcrum</b><small>Governed AI</small></span>
                   </div>
                   <div class="fx-fns">
-                    <span class="fx-fn" style="--d:1s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h4l2-5 3 10 2-7 2 4h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>Triage</span>
-                    <span class="fx-fn" style="--d:1.7s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>Diagnose</span>
-                    <span class="fx-fn" style="--d:2.4s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 6.5a3.5 3.5 0 00-4.6 4.3L4 16.7 7.3 20l5.9-5.9a3.5 3.5 0 004.3-4.6l-2.3 2.3-2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></svg>Remediate</span>
-                    <span class="fx-fn" style="--d:3.1s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>Govern</span>
+                    <span class="fx-fn" style="--d:1s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>Diagnose</span>
+                    <span class="fx-fn" style="--d:1.7s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 6.5a3.5 3.5 0 00-4.6 4.3L4 16.7 7.3 20l5.9-5.9a3.5 3.5 0 004.3-4.6l-2.3 2.3-2-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></svg>Remediate</span>
+                    <span class="fx-fn" style="--d:2.4s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>Approve</span>
+                    <span class="fx-fn" style="--d:3.1s"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h4l2-5 3 10 2-7 2 4h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>Verify</span>
                   </div>
                 </div>
 
@@ -1631,19 +1710,34 @@
                 <div class="fx-col fx-col--out">
                   <span class="fx-col-label">What you get</span>
                   <span class="fx-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="2.4" stroke="currentColor" stroke-width="1.6" /><circle cx="6" cy="18" r="2.4" stroke="currentColor" stroke-width="1.6" /><circle cx="18" cy="14" r="2.4" stroke="currentColor" stroke-width="1.6" /><path d="M6 8.4v7.2M18 11.6V8a3 3 0 00-3-3H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>Pull requests</span>
-                  <span class="fx-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" /><path d="M8.5 12l2.4 2.4L16 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>Approvals</span>
+                  <span class="fx-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 108-8 8 8 0 00-6.9 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /><path d="M5 4v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>Rollbacks</span>
                   <span class="fx-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h8l4 4v14H6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /><path d="M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>Audit trail</span>
                   <span class="fx-chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>DORA metrics</span>
                 </div>
               </div>
 
-              <ol class="fx-journey" aria-label="The Fulcrum journey">
-                <li><span class="fx-jn">1</span><span class="fx-jt"><b>Ingest</b><small>Collect signals</small></span></li>
-                <li><span class="fx-jn">2</span><span class="fx-jt"><b>Understand</b><small>AI finds the why</small></span></li>
-                <li><span class="fx-jn">3</span><span class="fx-jt"><b>Act</b><small>Fix or roll back</small></span></li>
-                <li><span class="fx-jn">4</span><span class="fx-jt"><b>Govern</b><small>Human approves</small></span></li>
-                <li><span class="fx-jn">5</span><span class="fx-jt"><b>Learn</b><small>Improve over time</small></span></li>
+              <ol class="fx-journey" aria-label="The self-healing loop">
+                <li><span class="fx-jn">1</span><span class="fx-jt"><b>Detect</b><small>A build or deploy breaks</small></span></li>
+                <li><span class="fx-jn">2</span><span class="fx-jt"><b>Diagnose</b><small>AI finds the why</small></span></li>
+                <li><span class="fx-jn">3</span><span class="fx-jt"><b>Remediate</b><small>Fix or roll back</small></span></li>
+                <li><span class="fx-jn">4</span><span class="fx-jt"><b>Verify</b><small>Confirm recovery</small></span></li>
+                <li><span class="fx-jn">5</span><span class="fx-jt"><b>Learn</b><small>Recall it next time</small></span></li>
               </ol>
+              <p class="fx-loop-note"><span class="fx-loop-glyph" aria-hidden="true">&#8635;</span> A closed loop &mdash; it keeps watching, and every fix makes the next one faster.</p>
+
+              <!-- The autonomy ladder: how far Fulcrum may act, earned per repository. The
+                   single biggest differentiator — a trust dial, not a black box. The rungs
+                   light in sequence to read as "earning up the ladder". -->
+              <div class="fx-ladder">
+                <span class="fx-ladder-label">You set how far it acts</span>
+                <div class="fx-ladder-track" aria-label="The autonomy ladder, low to high">
+                  <span class="fx-rung" style="--d:0s">Observe</span>
+                  <span class="fx-rung" style="--d:.6s">Propose</span>
+                  <span class="fx-rung" style="--d:1.2s">Approve</span>
+                  <span class="fx-rung fx-rung--peak" style="--d:1.8s">Auto</span>
+                </div>
+                <span class="fx-ladder-foot">Earned autonomy, per repository &mdash; Fulcrum acts on its own only once you let it, and never on an irreversible step without the gate you chose.</span>
+              </div>
             </div>
 
             <div class="fx-cta">
