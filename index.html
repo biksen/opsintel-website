@@ -473,9 +473,31 @@
         border-radius: 999px;
         padding: 5px 11px;
       }
-      /* Headline block, with the decorative particle field behind its right edge. */
+      /* Identity block: name + pill on one row, the "agentic SRE" label beneath it. */
+      .fulcrum-id {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+      }
+      .fulcrum-id-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      /* The live status sits at the card's top-right, aligned with the wordmark row. */
+      .fulcrum-top .fx-status {
+        margin-left: auto;
+        align-self: flex-start;
+        margin-top: 4px;
+      }
+      /* Headline block — divided from the identity above, particle field behind its edge. */
       .fulcrum-lead {
         position: relative;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--edge);
       }
       .fx-spark {
         position: absolute;
@@ -618,9 +640,9 @@
         color: var(--ink-muted);
       }
       .fulcrum-label {
-        margin-top: 20px;
+        margin-top: 3px;
         font-family: var(--font-mono);
-        font-size: 12.5px;
+        font-size: 11.5px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--purple);
@@ -1595,12 +1617,20 @@
               <span class="fulcrum-mark" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 13.5L20 8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 11L7.5 18.5H16.5Z" fill="currentColor" /><circle cx="12" cy="11" r="1.35" fill="currentColor" /></svg>
               </span>
-              <span class="fulcrum-name">Fulcrum</span>
-              <span class="fulcrum-pill">Governed AI</span>
+              <div class="fulcrum-id">
+                <div class="fulcrum-id-row">
+                  <span class="fulcrum-name">Fulcrum</span>
+                  <span class="fulcrum-pill">Governed AI</span>
+                </div>
+                <div class="fulcrum-label">Agentic SRE for software delivery</div>
+              </div>
+              <span class="fx-status" data-fx-status data-state="checking">
+                <span class="led"></span>
+                <b class="fx-text">Checking…</b>
+              </span>
             </div>
 
             <div class="fulcrum-lead">
-              <div class="fulcrum-label">Agentic SRE for software delivery</div>
               <h2>From a red build or a bad deploy to a fix your team <span class="hl">can trust.</span></h2>
               <svg class="fx-spark" viewBox="0 0 360 220" fill="none" aria-hidden="true" preserveAspectRatio="none">
                 <g stroke="url(#sparkGrad)" stroke-width="1.4" fill="none" opacity="0.9">
@@ -1638,10 +1668,7 @@
                 Explore Fulcrum
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
               </a>
-              <span class="fx-status fx-status-lg" data-fx-status data-state="checking">
-                <span class="led"></span>
-                <span class="fx-status-txt"><b class="fx-text">Checking…</b><small>Monitoring your pipeline</small></span>
-              </span>
+              <a class="btn btn-ghost" href="#contact">Request a demo</a>
             </div>
 
             <!-- The governed self-healing loop — the centrepiece. Signals converge into
@@ -1724,29 +1751,8 @@
                 <li><span class="fx-jn">5</span><span class="fx-jt"><b>Learn</b><small>Recall it next time</small></span></li>
               </ol>
               <p class="fx-loop-note"><span class="fx-loop-glyph" aria-hidden="true">&#8635;</span> A closed loop &mdash; it keeps watching, and every fix makes the next one faster.</p>
-
-              <!-- The autonomy ladder: how far Fulcrum may act, earned per repository. The
-                   single biggest differentiator — a trust dial, not a black box. The rungs
-                   light in sequence to read as "earning up the ladder". -->
-              <div class="fx-ladder">
-                <span class="fx-ladder-label">You set how far it acts</span>
-                <div class="fx-ladder-track" aria-label="The autonomy ladder, low to high">
-                  <span class="fx-rung" style="--d:0s">Observe</span>
-                  <span class="fx-rung" style="--d:.6s">Propose</span>
-                  <span class="fx-rung" style="--d:1.2s">Approve</span>
-                  <span class="fx-rung fx-rung--peak" style="--d:1.8s">Auto</span>
-                </div>
-                <span class="fx-ladder-foot">Earned autonomy, per repository &mdash; Fulcrum acts on its own only once you let it, and never on an irreversible step without the gate you chose.</span>
-              </div>
             </div>
 
-            <div class="fx-cta">
-              <span class="fx-cta-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg></span>
-              <span class="fx-cta-txt"><b>Built for velocity. Designed for control.</b><small>Ship faster with AI that follows your rules.</small></span>
-              <a class="fx-cta-link" href="https://fulcrum.opsintels.com" data-launch>See how it works
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-              </a>
-            </div>
           </div>
 
           <div class="caps">
