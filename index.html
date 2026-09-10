@@ -420,6 +420,9 @@
           var(--surface);
         display: grid;
         grid-template-columns: 1.16fr 1fr;
+        /* Let the cards column take its own content height (not stretch to the taller left
+           column), so the six cards equalise to the tallest instead of being inflated. */
+        align-items: start;
       }
       @media (max-width: 900px) {
         .fulcrum-card {
@@ -1094,10 +1097,10 @@
         padding: clamp(24px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        /* Content-sized rows, packed tight at the top with an even gap — no big spaces
-           between the rows, and no inflated cards. Any leftover height (the left column
-           holds the tall loop) sits below the grid, not between the cards. */
-        grid-auto-rows: auto;
+        /* All six cards the same height: the column is content-sized (align-items:start on
+           the card), and 1fr rows equalise the three rows to the tallest — so every card
+           matches the tallest, tight, with no inflation. */
+        grid-auto-rows: 1fr;
         gap: 14px;
         align-content: start;
       }
@@ -1151,7 +1154,7 @@
         position: relative;
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: 0.98rem;
+        font-size: 0.9rem;
         line-height: 1.25;
         letter-spacing: -0.005em;
         color: var(--ink);
@@ -1745,37 +1748,37 @@
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7" /><path d="M20 20l-4.6-4.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Root-cause intelligence</b>
-              <span class="d">Pinpoints the root cause of a failed build or deploy — so engineers fix in minutes, not hunt for hours.</span>
+              <span class="d">Pinpoints why a build or deploy failed — engineers fix in minutes, not hunt for hours.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Evidence-linked diagnosis</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 108-8 8 8 0 00-6.9 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /><path d="M5 4v4h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Institutional memory</b>
-              <span class="d">Recognises a failure it has seen before and reuses the fix that worked — your incident history, applied automatically.</span>
+              <span class="d">Recognises a failure it has seen before and reuses the fix — your incident history, applied automatically.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Learns from every fix</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Self-healing, under your control</b>
-              <span class="d">A failing build ships a fix as a pull request and rolls back bad deploys &mdash; you set how far it acts, per repository.</span>
+              <span class="d">Fixes builds via pull request and rolls back bad deploys — you set how far it acts, per repository.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Observe &rarr; propose &rarr; auto</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7" /><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7" /><circle cx="12" cy="15.5" r="1.2" fill="currentColor" /></svg></span>
               <b>Security &amp; governance</b>
-              <span class="d">Audit-ready by design: SSO, role-based access, vaulted secrets, and a tamper-evident record you can hand to any review.</span>
+              <span class="d">SSO, RBAC, vaulted secrets, and a tamper-evident audit record you can hand to any review.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>SSO · RBAC · audit log</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 13l4-4 4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 20h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg></span>
               <b>Measured value &amp; reliability</b>
-              <span class="d">DORA metrics, step-latency SLOs, and eval-gated changes make reliability provable — with budget caps that keep spend predictable.</span>
+              <span class="d">DORA metrics, step-latency SLOs, eval-gated changes, and budget caps that keep spend predictable.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>DORA · SLOs · budget caps</span>
             </div>
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.7" /><path d="M10 6.5h4a3 3 0 013 3v4" stroke="currentColor" stroke-width="1.7" /></svg></span>
               <b>Plug-and-play, vendor-neutral</b>
-              <span class="d">Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Jenkins, AWS. No rip-and-replace, no lock-in.</span>
+              <span class="d">Connects to the CI/CD, cloud, and source tools you already run — GitHub, GitLab, Jenkins, AWS.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Live in weeks, not months</span>
             </div>
           </div>
