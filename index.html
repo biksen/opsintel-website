@@ -1094,9 +1094,12 @@
         padding: clamp(24px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 1fr;
+        /* Rows sized to their content — NOT 1fr of the (tall) left column, which was
+           inflating every card and leaving the big voids. Any leftover height falls
+           between the rows, so the cards stay tight and the two columns still balance. */
+        grid-auto-rows: auto;
         gap: 13px;
-        align-content: stretch;
+        align-content: space-between;
       }
       @media (max-width: 560px) {
         .caps {
@@ -1105,7 +1108,6 @@
         }
       }
       .cap {
-        height: 100%;
         display: flex;
         flex-direction: column;
         gap: 9px;
