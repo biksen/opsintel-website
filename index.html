@@ -1108,6 +1108,8 @@
         }
       }
       .cap {
+        /* Per-card accent, matching the design: purple by default; green / blue below. */
+        --cap: var(--purple);
         display: flex;
         flex-direction: column;
         gap: 9px;
@@ -1121,9 +1123,12 @@
           background 0.18s ease,
           box-shadow 0.18s ease;
       }
+      .cap:nth-child(3) { --cap: var(--ok); }   /* Self-healing — green */
+      .cap:nth-child(5) { --cap: var(--blue); } /* Measured value — blue */
+      .cap:nth-child(6) { --cap: var(--ok); }   /* Plug-and-play — green */
       .cap:hover {
         transform: translateY(-3px);
-        border-color: color-mix(in srgb, var(--purple) 45%, var(--edge));
+        border-color: color-mix(in srgb, var(--cap) 45%, var(--edge));
         background: rgba(255, 255, 255, 0.045);
         box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.55);
       }
@@ -1133,9 +1138,9 @@
         border-radius: 11px;
         display: grid;
         place-items: center;
-        background: rgba(168, 121, 244, 0.14);
-        border: 1px solid rgba(168, 121, 244, 0.3);
-        color: var(--purple);
+        background: color-mix(in srgb, var(--cap) 15%, transparent);
+        border: 1px solid color-mix(in srgb, var(--cap) 32%, transparent);
+        color: var(--cap);
       }
       .cap .ic svg {
         width: 18px;
@@ -1160,7 +1165,7 @@
         width: 24px;
         height: 2px;
         border-radius: 2px;
-        background: var(--grad);
+        background: var(--cap);
       }
       .cap .d {
         color: var(--ink-muted);
@@ -1175,17 +1180,18 @@
         border-top: 1px solid var(--edge);
         display: flex;
         align-items: center;
-        gap: 7px;
+        gap: 6px;
         font-family: var(--font-mono);
-        font-size: 10.5px;
-        letter-spacing: 0.03em;
-        color: var(--ink-faint);
+        font-size: 9.5px;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        color: var(--cap);
       }
       .cap-foot svg {
         flex: none;
         width: 13px;
         height: 13px;
-        color: var(--purple);
+        color: var(--cap);
       }
       /* The accented tail of the Fulcrum headline. */
       .fulcrum-main h2 .hl {
@@ -1634,29 +1640,6 @@
 
             <div class="fulcrum-lead">
               <h2>From a red build or a bad deploy to a fix your team <span class="hl">can trust.</span></h2>
-              <svg class="fx-spark" viewBox="0 0 360 220" fill="none" aria-hidden="true" preserveAspectRatio="none">
-                <g stroke="url(#sparkGrad)" stroke-width="1.4" fill="none" opacity="0.9">
-                  <path d="M20 150 C 110 150, 150 96, 250 70 S 340 44, 360 40" />
-                  <path d="M20 168 C 120 168, 160 120, 260 96 S 345 74, 360 70" />
-                  <path d="M20 186 C 130 186, 175 146, 270 124 S 348 106, 360 102" />
-                  <path d="M20 204 C 140 204, 190 172, 280 152 S 350 138, 360 134" />
-                </g>
-                <g fill="var(--purple)">
-                  <circle cx="250" cy="70" r="2.4" class="fx-spark-dot" style="--sp:0s" />
-                  <circle cx="286" cy="88" r="2" class="fx-spark-dot" style="--sp:.9s" />
-                  <circle cx="318" cy="60" r="2.6" class="fx-spark-dot" style="--sp:.4s" />
-                  <circle cx="300" cy="120" r="1.8" class="fx-spark-dot" style="--sp:1.5s" />
-                  <circle cx="336" cy="104" r="2.2" class="fx-spark-dot" style="--sp:2.1s" />
-                  <circle cx="270" cy="150" r="1.8" class="fx-spark-dot" style="--sp:1.1s" />
-                </g>
-                <defs>
-                  <linearGradient id="sparkGrad" x1="0" y1="0" x2="360" y2="0" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="var(--blue)" stop-opacity="0" />
-                    <stop offset="0.5" stop-color="var(--purple)" stop-opacity="0.55" />
-                    <stop offset="1" stop-color="var(--purple)" stop-opacity="0.9" />
-                  </linearGradient>
-                </defs>
-              </svg>
             </div>
             <p class="fulcrum-desc">
               Fulcrum is an agentic SRE for your delivery pipeline. It diagnoses a failing
@@ -1773,7 +1756,7 @@
             <div class="cap">
               <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><path d="M9.4 12l1.9 1.9L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
               <b>Self-healing, under your control</b>
-              <span class="d">A failing build ships a fix as a pull request; a bad deploy rolls back to last-good and Fulcrum confirms the service recovered. It earns more autonomy only as it earns your trust &mdash; you set how far it may act, per repository.</span>
+              <span class="d">A failing build ships a fix as a pull request and rolls back bad deploys &mdash; you set how far it acts, per repository.</span>
               <span class="cap-foot"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>Observe &rarr; propose &rarr; auto</span>
             </div>
             <div class="cap">
