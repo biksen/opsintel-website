@@ -674,8 +674,8 @@
          over a 7s loop: inputs pulse together, functions light one-by-one, outputs
          pulse, and dashed wires stream throughout. Motion off under reduced-motion. */
       .fx-panel {
-        margin-top: 30px;
-        margin-bottom: 22px;
+        margin-top: 26px;
+        margin-bottom: 0;
         padding: 20px;
         border: 1px solid var(--edge);
         border-radius: 16px;
@@ -1094,12 +1094,12 @@
         padding: clamp(24px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        /* Rows sized to their content — NOT 1fr of the (tall) left column, which was
-           inflating every card and leaving the big voids. Any leftover height falls
-           between the rows, so the cards stay tight and the two columns still balance. */
+        /* Content-sized rows, packed tight at the top with an even gap — no big spaces
+           between the rows, and no inflated cards. Any leftover height (the left column
+           holds the tall loop) sits below the grid, not between the cards. */
         grid-auto-rows: auto;
-        gap: 13px;
-        align-content: space-between;
+        gap: 14px;
+        align-content: start;
       }
       @media (max-width: 560px) {
         .caps {
@@ -1123,6 +1123,7 @@
           background 0.18s ease,
           box-shadow 0.18s ease;
       }
+      .cap:nth-child(1) { --cap: var(--blue); } /* Root-cause — blue */
       .cap:nth-child(3) { --cap: var(--ok); }   /* Self-healing — green */
       .cap:nth-child(5) { --cap: var(--blue); } /* Measured value — blue */
       .cap:nth-child(6) { --cap: var(--ok); }   /* Plug-and-play — green */
