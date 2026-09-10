@@ -420,9 +420,9 @@
           var(--surface);
         display: grid;
         grid-template-columns: 1.16fr 1fr;
-        /* Let the cards column take its own content height (not stretch to the taller left
-           column), so the six cards equalise to the tallest instead of being inflated. */
-        align-items: start;
+        /* Both columns share the same height; the cards fill the right column, so its bottom
+           aligns with the left (the animation panel). */
+        align-items: stretch;
       }
       @media (max-width: 900px) {
         .fulcrum-card {
@@ -1097,12 +1097,12 @@
         padding: clamp(24px, 3vw, 34px);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        /* All six cards the same height: the column is content-sized (align-items:start on
-           the card), and 1fr rows equalise the three rows to the tallest — so every card
-           matches the tallest, tight, with no inflation. */
+        /* Three equal rows that fill the column height, so all six cards are the same height
+           and the right column's bottom lines up with the left. Each card pins its footer to
+           the bottom, leaving space between the description and the bottom line. */
         grid-auto-rows: 1fr;
         gap: 14px;
-        align-content: start;
+        align-content: stretch;
       }
       @media (max-width: 560px) {
         .caps {
@@ -1154,7 +1154,7 @@
         position: relative;
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         line-height: 1.25;
         letter-spacing: -0.005em;
         color: var(--ink);
